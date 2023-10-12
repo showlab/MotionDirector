@@ -1,0 +1,359 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0045)http://6.869.csail.mit.edu/fa19/schedule.html -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<link href="https://fonts.cdnfonts.com/css/caveat" rel="stylesheet">
+<style>
+    @import url('https://fonts.cdnfonts.com/css/caveat');
+</style>
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>MotionDirector</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <meta name="description"
+        content="Project page for &#39;MotionDirector: Motion Customization of Text-to-Video Diffusion Models.&#39;">
+    <link rel="icon" href="./assets/showlab_nus.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    <p class="title">MotionDirector: Motion Customization of Text-to-Video Diffusion Models</p>
+    <p class="author">
+        <span class="author">
+            <a href="https://ruizhaocv.github.io/">Rui Zhao</a><sup>1</sup>
+        </span>
+        <span class="author">
+            <a href="https://ycgu.site/">Yuchao Gu</a><sup>1</sup>
+        </span>
+        <span class="author">
+            <a href="https://zhangjiewu.github.io/">Jay Zhangjie Wu</a><sup>1</sup>
+        </span>
+        <span class="author">
+            <a href="https://junhaozhang98.github.io/">David Junhao Zhang</a><sup>1</sup>
+        </span>
+        <span class="author">
+            <a href="https://jia-wei-liu.github.io/">Jia-Wei Liu</a><sup>1</sup>
+        </span>
+        <br/>
+        <span class="author">
+            <a href="https://weijiawu.github.io/">Weijia Wu</a><sup>3</sup>
+        </span>
+        <span class="author">
+            <a href="https://www.jussikeppo.com/">Jussi Keppo</a><sup>2</sup>
+        </span>
+        <span class="author">
+            <a href="https://sites.google.com/view/showlab/">Mike Zheng Shou</a><sup>1</sup>
+        </span>
+    </p>
+
+    <p class="affiliations">
+        <span class="author"><sup>1</sup><a href="https://sites.google.com/view/showlab">Show Lab</a>, <sup>2</sup>National University of Singapore</span>
+        <span class="author"><sup>3</sup>Zhejiang University</span><br/>
+    </p>
+
+    <p class="menu">
+        <a style="color: steelblue" href="">[Paper (arXiv)]</a>
+        <a style="color: steelblue" href="https://github.com/showlab/MotionDirector" >[Code (Github)]</a>
+    </p>
+
+    <p class="section">&nbsp;</p>
+
+    <div style="text-align: center">
+            <p style="text-align: justify; display: flex; justify-content: center; max-width: 800px; margin:auto; background-color:lightgoldenrodyellow">
+                📖<strong>TL;DR</strong>: MotionDirector can customize text-to-video diffusion models to generate videos with desired motions.
+            <p class="section">&nbsp;</p>
+    </div>
+
+    <div class="container">
+
+        <div style="text-align: center">
+            <img src="./assets/teaser.gif" alt="" width="1080px" style="max-width: 90%; height: auto;" />
+        </div>
+
+        <br/><br/><br/>
+        <p style="text-align: center;"><span class="section"><b>Abstract</b></span></p>
+        <p style="text-align: justify; display: flex; justify-content: center; max-width: 800px; margin:auto"> 
+            Large-scale pre-trained diffusion models have exhibited remarkable capabilities in diverse
+            video generations. Given a set of video clips of the same motion concept, the task of Motion Customization
+            is to adapt existing text-to-video diffusion models to generate videos with this motion. For example,
+            generating a video with a car moving in a prescribed manner under specific camera movements to make a
+            movie, or a video illustrating how a bear would lift weights to inspire creators. Adaptation methods
+            have been developed for customizing appearance like subject or style, yet unexplored for motion.
+            It is straightforward to extend mainstream adaption methods for motion customization, including full
+            model tuning, parameter-efficient tuning of additional layers, and Low-Rank Adaptions (LoRAs). However,
+            the motion concept learned by these methods is often coupled with the limited appearances in the training
+            videos, making it difficult to generalize the customized motion to other appearances. To overcome this
+            challenge, we propose MotionDirector, with a dual-path LoRAs architecture to decouple the learning of
+            appearance and motion. Further, we design a novel appearance-debiased temporal loss to mitigate the
+            influence of appearance on the temporal training objective. Experimental results show the proposed method
+            can generate videos of diverse appearances for the customized motions. Our method also supports various
+            downstream applications, such as the mixing of different videos with their appearance and motion
+            respectively, and animating a single image with customized motions.
+        <p class="section">&nbsp;</p>
+
+        <br/>
+        <p class="section"><b>Method</b></p>
+        <div style="text-align: center">
+            <img src="./assets/method.png" alt="" width="1080px" style="max-width: 90%; height: auto;" />
+        </div>
+        <p style="text-align: justify">
+            MotionDirector with a dual-path architecture learns the appearances and motions of reference videos in a decoupled way.
+            All pre-trained weights of the foundational text-to-video diffusion model remain fixed.
+            In the training stage, the spatial LoRAs learn to fit the appearances of the reference videos,
+            while the temporal LoRAs learn their motion dynamics.
+            During inference, injecting the trained temporal LoRAs into foundation models enables them
+            to generalize the learned motions to diverse appearances.
+        </p>
+
+        <br/>
+        <p class="section"><b>Results</b></p>
+        <br/>
+        <p style="text-align: center; font-size: 150%">Decouple the appearances and motions!</p>
+        <div style="text-align: center">
+            <img src="./assets/tasks.gif" alt="" width="1080px" style="max-width: 90%; height: auto;" />
+        </div>
+        <p style="text-align: justify">
+            (Row 1) Take two videos to train the proposed MotionDirector, respectively.
+            (Row 2) MotionDirector can generalize the learned motions to diverse appearances.
+            (Row 3) MotionDirector can mix the learned motion and appearance from different videos to generate new videos.
+            (Row 4) MotionDirector can animate a single image with learned motions.
+        </p>
+
+        <br/><br/>
+        <p style="text-align: center; font-size: 150%">Motion customization on multiple videos</p>
+        <div style="text-align: center">
+            <img src="./assets/results/results_multi.gif" alt="" width="1080px" style="max-width: 90%; height: auto;" />
+        </div>
+
+        <br/><br/>
+        <p style="text-align: center; font-size: 150%">Motion customization on a single video</p>
+        <div style="text-align: center">
+            <img src="./assets/results/results_single.gif" alt="" width="1080px" style="max-width: 90%; height: auto;" />
+        </div>
+
+        <br/><br/>
+        <div class="container" style="min-height: 224px">
+            <p style="text-align: center; font-size: 150%">More results</p>
+            <div id="imageCarousel" class="carousel slide teaser-carousel" data-ride="carousel" data-interval="5000">
+                <div class="carousel-inner">
+
+                    <div class="carousel-item active">
+                        <div>
+                            <img width="512" src="./assets/results/skateboarding/bear.gif" />
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div>
+                            <img width="512" src="./assets/results/skateboarding/lion.gif" />
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div>
+                            <img width="512" src="./assets/results/skateboarding/moon.gif" />
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div>
+                            <img width="512" src="./assets/results/skateboarding/alien.gif" />
+                        </div>
+                    </div>
+                </div>
+
+                <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
+                    <div class="slider-navigation-previous" style="top: 40%">
+                        <svg viewBox="0 0 50 80" xml:space="preserve">
+                            <polyline fill="white" stroke-width=".5em" stroke-linecap="round"
+                                stroke-linejoin="round" points="45.63,75.8 0.375,38.087 45.63,0.375 ">
+                            </polyline>
+                        </svg>
+                    </div>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
+                    <div class="slider-navigation-next" style="top: 40%">
+                        <svg viewBox="0 0 50 80" xml:space="preserve">
+                            <polyline fill="white" stroke-width=".5em" stroke-linecap="round"
+                                stroke-linejoin="round" points="0.375,0.375 45.63,38.087 0.375,75.8 ">
+                            </polyline>
+                        </svg>
+                    </div>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="container" style="min-height: 224px">
+            <div id="imageCarousel1" class="carousel slide teaser-carousel" data-ride="carousel" data-interval="5000">
+                <div class="carousel-inner">
+
+                    <div class="carousel-item active">
+                        <div>
+                            <img width="512" src="./assets/results/more_results/001.gif" />
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div>
+                            <img width="512" src="./assets/results/more_results/002.gif" />
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div>
+                            <img width="512" src="./assets/results/more_results/003.gif" />
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div>
+                            <img width="512" src="./assets/results/more_results/004.gif" />
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div>
+                            <img width="512" src="./assets/results/more_results/005.gif" />
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div>
+                            <img width="512" src="./assets/results/more_results/006.gif" />
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div>
+                            <img width="512" src="./assets/results/more_results/007.gif" />
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div>
+                            <img width="512" src="./assets/results/more_results/008.gif" />
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div>
+                            <img width="512" src="./assets/results/more_results/009.gif" />
+                        </div>
+                    </div>
+                </div>
+
+                <a class="carousel-control-prev" href="#imageCarousel1" role="button" data-slide="prev">
+                    <div class="slider-navigation-previous" style="top: 40%">
+                        <svg viewBox="0 0 50 80" xml:space="preserve">
+                            <polyline fill="white" stroke-width=".5em" stroke-linecap="round"
+                                stroke-linejoin="round" points="45.63,75.8 0.375,38.087 45.63,0.375 ">
+                            </polyline>
+                        </svg>
+                    </div>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#imageCarousel1" role="button" data-slide="next">
+                    <div class="slider-navigation-next" style="top: 40%">
+                        <svg viewBox="0 0 50 80" xml:space="preserve">
+                            <polyline fill="white" stroke-width=".5em" stroke-linecap="round"
+                                stroke-linejoin="round" points="0.375,0.375 45.63,38.087 0.375,75.8 ">
+                            </polyline>
+                        </svg>
+                    </div>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+
+        <br/><br/><br/>
+
+<!--        <p class="section" id="bibtex"><b>Bibtex</b></p>-->
+<!--        <table border="0">-->
+<!--            <tbody>-->
+<!--                <pre style=" display: block;-->
+<!--                    background: #eee;-->
+<!--                    white-space: pre;-->
+<!--                    -webkit-overflow-scrolling: touch;-->
+<!--                    max-width: 100%;-->
+<!--                    min-width: 100px;-->
+<!--                    border-radius: 20px;-->
+<!--                    ">-->
+
+<!--    @article{gu2023mixofshow,-->
+<!--        title={Mix-of-Show: Decentralized Low-Rank Adaptation for Multi-Concept Customization of Diffusion Models},-->
+<!--        author={Gu, Yuchao and Wang, Xintao and Wu, Jay Zhangjie and Shi, Yujun and Chen Yunpeng and Fan, Zihan and Xiao, Wuyou and Zhao, Rui and Chang, Shuning and Wu, Weijia and Ge, Yixiao and Shan Ying and Shou, Mike Zheng},-->
+<!--        journal={arXiv preprint arXiv:2305.18292},-->
+<!--        year={2023}-->
+<!--    }-->
+<!--			    </pre>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--        -->
+    </div>
+
+    <footer class="footer">
+        <p style="text-align: center;">
+            This page was adapted from <a href="https://github.com/pnp-diffusion/pnp-diffusion.github.io">this</a> source code.
+        </p>
+    </footer>
+
+
+</body>
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-WLX2Z5QLG8');
+ </script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ <script type="text/javascript">
+    $(document).ready(function () {
+
+        if (localStorage.getItem("my_app_name_here-quote-scroll") != null) {
+            $(window).scrollTop(localStorage.getItem("my_app_name_here-quote-scroll"));
+        }
+
+        $(window).on("scroll", function() {
+            localStorage.setItem("my_app_name_here-quote-scroll", $(window).scrollTop());
+        });
+
+      });
+ </script>
+
+ <script>
+    function prompt_on(prompt_element) {
+        prompt_element.classList.add("caption-active");
+    }
+
+    function prompt_off(prompt_element) {
+        prompt_element.classList.remove("caption-active");
+    }
+
+    function toggle_prompt(active_prompt_id, inactive_prompt_ids, condition_id, result_id) {
+        let active_prompt = document.getElementById(active_prompt_id);
+        prompt_on(active_prompt);
+        for (let i = 0; i < inactive_prompt_ids.length; i++) {
+            let inactive_prompt = document.getElementById(inactive_prompt_ids[i]);
+            prompt_off(inactive_prompt);
+        }
+
+        let condition = document.getElementById(condition_id);
+        condition.src = file_paths[active_prompt_id][0];
+
+        let result = document.getElementById(result_id);
+        result.src = file_paths[active_prompt_id][1];
+    }
+ </script>
+
+ <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</html>
