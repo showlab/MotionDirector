@@ -25,7 +25,7 @@ This is the official repository of [MotionDirector](https://showlab.github.io/Mo
 
 ## ToDo
 - [ ] Release training and inference code.
-- [ ] Release trained LoRAs.
+- [ ] Release model weights.
 - [ ] ...
 
 ## Results
