@@ -15,7 +15,7 @@ This is the official repository of [MotionDirector](https://showlab.github.io/Mo
 <br/>
 
 [![Project Page](https://img.shields.io/badge/Project-Website-orange)](https://showlab.github.io/MotionDirector)
-[![arXiv](https://img.shields.io/badge/arXiv-2212.11565-b31b1b.svg)]()
+[![arXiv](https://img.shields.io/badge/arXiv-MotionDirector-b31b1b.svg)](https://arxiv.org/abs/2310.08465)
 
 <p align="center">
 <img src="https://github.com/showlab/MotionDirector/blob/page/assets/teaser.gif" width="1080px"/>  
@@ -55,21 +55,18 @@ This is the official repository of [MotionDirector](https://showlab.github.io/Mo
 ### More results
 Please refer to [Project Page](https://showlab.github.io/MotionDirector).
 
-[//]: # (## Citation)
+## Citation
 
-[//]: # ()
-[//]: # (```bibtex)
 
-[//]: # (@article{wu2022tuneavideo,)
+```bibtex
 
-[//]: # (    title={Tune-A-Video: One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation},)
+@misc{zhao2023motiondirector,
+      title={MotionDirector: Motion Customization of Text-to-Video Diffusion Models}, 
+      author={Rui Zhao and Yuchao Gu and Jay Zhangjie Wu and David Junhao Zhang and Jiawei Liu and Weijia Wu and Jussi Keppo and Mike Zheng Shou},
+      year={2023},
+      eprint={2310.08465},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
 
-[//]: # (    author={Wu, Jay Zhangjie and Ge, Yixiao and Wang, Xintao and Lei, Stan Weixian and Gu, Yuchao and Hsu, Wynne and Shan, Ying and Qie, Xiaohu and Shou, Mike Zheng},)
-
-[//]: # (    journal={arXiv preprint arXiv:2212.11565},)
-
-[//]: # (    year={2022})
-
-[//]: # (})
-
-[//]: # (```)
+```
