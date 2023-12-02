@@ -1,0 +1,127 @@
+# Pretrained diffusers model path.
+pretrained_model_path: "/Users/rui/data/models/zeroscope_v2_576w/"
+
+# The folder where your training outputs will be placed.
+output_dir: "./outputs/train"
+
+# You can train multiple datasets at once. They will be joined together for training.
+# Simply remove the line you don't need, or keep them all for mixed training.
+
+dataset_types:
+  - 'single_video'
+
+# Caches the latents (Frames-Image -> VAE -> Latent) to a HDD or SDD. 
+# The latents will be saved under your training folder, and loaded automatically for training.
+# This both saves memory and speeds up training and takes very little disk space.
+cache_latents: True
+
+# If you have cached latents set to `True` and have a directory of cached latents,
+# you can skip the caching process and load previously saved ones. 
+cached_latent_dir: null #/path/to/cached_latents
+
+
+# Use LoRA for the UNET model.
+use_unet_lora: True
+
+# LoRA Dropout. This parameter adds the probability of randomly zeros out elements. Helps prevent overfitting.
+# See: https://pytorch.org/docs/stable/generated/torch.nn.Dropout.html
+lora_unet_dropout: 0.1
+
+# Choose whether or not ito save the full pretrained model weights for both checkpoints and after training.
+# The only time you want this off is if you're doing full LoRA training.
+save_pretrained_model: False
+
+# The rank for LoRA training. With ModelScope, the maximum should be 1024. 
+# VRAM increases with higher rank, lower when decreased.
+lora_rank: 32
+
+# Training data parameters
+train_data:
+
+  # The width and height in which you want your training data to be resized to.
+  width: 576
+  height: 320
+
+  # This will find the closest aspect ratio to your input width and height. 
+  # For example, 512x512 width and height with a video of resolution 1280x720 will be resized to 512x256
+  use_bucketing: True
+
+  # The start frame index where your videos should start (Leave this at one for json and folder based training).
+  sample_start_idx: 1
+
+  # Used for 'folder'. The rate at which your frames are sampled. Does nothing for 'json' and 'single_video' dataset.
+  fps: 8
+
+  # For 'single_video' and 'json'. The number of frames to "step" (1,2,3,4) (frame_step=2) -> (1,3,5,7, ...).  
+  frame_step: 1
+
+  # The number of frames to sample. The higher this number, the higher the VRAM (acts similar to batch size).
+  n_sample_frames: 24
+  
+  # 'single_video'
+  single_video_path: "./test_data/car_turn/car-turn-24.mp4"
+
+  # The prompt when using a single video file
+  single_video_prompt: "A car is running on the road."
+
+# Validation data parameters.
+validation_data:
+
+  # A custom prompt that is different from your training dataset. 
+  prompt:
+  - "A tank is running in the desert."
+  - "A tiger is running in the forest."
+
+  # Whether or not to sample preview during training (Requires more VRAM).
+  sample_preview: True
+
+  # The number of frames to sample during validation.
+  num_frames: 24
+
+  # Height and width of validation sample.
+  width: 576
+  height: 320
+
+  # Number of inference steps when generating the video.
+  num_inference_steps: 30
+
+  # CFG scale
+  guidance_scale: 12
+
+  # scale of spatial LoRAs, default is 0
+  spatial_scale: 0
+
+  # scale of noise prior, i.e. the scale of inversion noises
+  noise_prior: 0.5
+
+# Learning rate for AdamW
+learning_rate: 5e-4
+
+# Weight decay. Higher = more regularization. Lower = closer to dataset.
+adam_weight_decay: 1e-2
+
+# Maximum number of train steps. Model is saved after training.
+max_train_steps: 300
+
+# Saves a model every nth step.
+checkpointing_steps: 50
+
+# How many steps to do for validation if sample_preview is enabled.
+validation_steps: 50
+
+# Seed for validation.
+seed: 6668889
+
+# Whether or not we want to use mixed precision with accelerate
+mixed_precision: "fp16"
+
+# Trades VRAM usage for speed. You lose roughly 20% of training speed, but save a lot of VRAM.
+# If you need to save more VRAM, it can also be enabled for the text encoder, but reduces speed x2.
+gradient_checkpointing: True
+text_encoder_gradient_checkpointing: True
+
+# Xformers must be installed for best memory savings and performance (< Pytorch 2.0)
+enable_xformers_memory_efficient_attention: True
+
+# Use scaled dot product attention (Only available with >= Torch 2.0)
+enable_torch_2_attn: True
