@@ -2,7 +2,7 @@
 
 This is the official repository of [MotionDirector](https://showlab.github.io/MotionDirector).
 
-**[MotionDirector: Motion Customization of Text-to-Video Diffusion Models.](https://showlab.github.io/MotionDirector)**
+**MotionDirector: Motion Customization of Text-to-Video Diffusion Models.**
 <br/>
 [Rui Zhao](https://ruizhaocv.github.io/),
 [Yuchao Gu](https://ycgu.site/), 
@@ -23,37 +23,126 @@ This is the official repository of [MotionDirector](https://showlab.github.io/Mo
 <em>MotionDirector can customize text-to-video diffusion models to generate videos with desired motions.</em>
 </p>
 
-## ToDo
-- [ ] Release training and inference code.
-- [ ] Release model weights.
-- [ ] ...
+## News
+- [02/12/2023] Code and model weights released!
 
-## Results
+## Setup
+### Requirements
 
-### Decouple the appearances and motions!
-<p align="center">
-<img src="https://github.com/showlab/MotionDirector/blob/page/assets/tasks.gif" width="1080px"/>  
-<br>
-<em>(Row 1) Take two videos to train the proposed MotionDirector, respectively. 
-(Row 2) MotionDirector can generalize the learned motions to diverse appearances. 
-(Row 3) MotionDirector can mix the learned motion and appearance from different videos to generate new videos. 
-(Row 4) MotionDirector can animate a single image with learned motions.</em>
-</p>
+```shell
+# create virtual environment
+conda create -n motiondirector python=3.8
+conda activate motiondirector
 
-### Motion customization on multiple videos
-<p align="center">
-<img src="https://github.com/showlab/MotionDirector/blob/page/assets/results/results_multi.gif" width="1080px"/>  
-<br>
-</p>
+# install packages
+pip install -r requirements.txt
+```
 
-### Motion customization on a single video
-<p align="center">
-<img src="https://github.com/showlab/MotionDirector/blob/page/assets/results/results_single.gif" width="1080px"/>  
-<br>
-</p>
+### Weights of Foundation Models
+```shell
+git lfs install
+## ZeroScope
+git clone https://huggingface.co/cerspense/zeroscope_v2_576w ./models/zeroscope_v2_576w/
+## ModelScopeT2V
+git clone https://huggingface.co/damo-vilab/text-to-video-ms-1.7b ./models/model_scope/
+```
 
-### More results
-Please refer to [Project Page](https://showlab.github.io/MotionDirector).
+## Usage
+### Training
+
+#### Train MotionDirector on multiple videos:
+```bash
+python MotionDirector_train.py --config ./configs/config_multi_videos.yaml
+```
+#### Train MotionDirector on a single video:
+```bash
+python MotionDirector_train.py --config ./configs/config_single_video.yaml
+```
+
+Note:  
+- Before running the above command, 
+make sure you replace the path to foundational model weights and training data with your own in the config files `config_multi_videos.yaml` or `config_single_video.yaml`.
+- Generally, training on multiple 16-frame videos usually takes `300~500` steps, about `9~16` minutes using one A100 GPU. Training on a single video takes `50~150` steps, about `1.5~4.5` minutes using one A100 GPU.
+- Reduce `n_sample_frames` if your GPU memory is limited.
+- Reduce the learning rate and increase the training steps for better performance.
+
+
+### Inference
+```bash
+python MotionDirector_inference.py --model /path/to/the/foundation/model  --prompt "Your prompt" --checkpoint_folder /path/to/the/trained/MotionDirector --checkpoint_index 300 --noise_prior 0.
+```
+Note: 
+- Replace `/path/to/the/foundation/model` with your own path to the foundation model, like ZeroScope.
+- The value of `checkpoint_index` means the checkpoint saved at which training step is selected.
+- The value of `noise_prior` indicates how much the inversion noise of the reference video affects the generation. 
+We recommend setting it to `0` for MotionDirector trained on multiple videos to achieve highest diverse generation, while setting it to `0.5` for MotionDirector trained on a singel video for achieving faster convergence and better alignment with the reference video.
+
+
+## Inference with pre-trained MotionDirector
+Please download the trained weights of MotionDirector through [Google Drive](https://drive.google.com/drive/folders/15anLJAkX1UplkPzpU1yLm-W7XoaFTCxp?usp=sharing).
+Put the files in the folder `outputs`, then run the following command to generated videos.
+
+### MotionDirector trained on multiple videos:
+```bash
+CUDA_VISIBLE_DEVICES=0 python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A person is riding a bicycle past the Eiffel Tower." --checkpoint_folder ./outputs/train/train_2023-12-02T13-39-36/ --checkpoint_index 300 --noise_prior 0. --seed 7192280
+```
+Note:  
+- Replace `/path/to/the/ZeroScope` with your own path to the foundation model, i.e. the ZeroScope.
+- Change the `prompt` to generate different videos. 
+- The `seed` is set to a random value by default. Set it to a specific value will obtain certain results, as provided in the table below.
+
+Results:
+
+<table class="center">
+<tr>
+  <td style="text-align:center;"><b>Reference Videos</b></td>
+  <td style="text-align:center;" colspan="3"><b>Videos Generated by MotionDirector</b></td>
+</tr>
+<tr>
+  <td><img src=assets/multi_videos_results/reference_videos.gif></td>
+  <td><img src=assets/multi_videos_results/A_person_is_riding_a_bicycle_past_the_Eiffel_Tower_7192280.gif></td>
+  <td><img src=assets/multi_videos_results/A_panda_is_riding_a_bicycle_in_a_garden_8040063.gif></td>              
+  <td><img src=assets/multi_videos_results/An_alien_is_riding_a_bicycle_on_Mars_2390886.gif></td>
+</tr>
+<tr>
+  <td width=25% style="text-align:center;color:gray;">"A person is riding a bicycle."</td>
+  <td width=25% style="text-align:center;">"A person is riding a bicycle past the Eiffel Tower.” </br> seed: 7192280</td>
+  <td width=25% style="text-align:center;">"A panda is riding a bicycle in a garden."  </br> seed: 8040063</td>
+  <td width=25% style="text-align:center;">"An alien is riding a bicycle on Mars."  </br> seed: 2390886</td>
+</tr>
+</table>
+
+### MotionDirector trained on a single video:
+```bash
+CUDA_VISIBLE_DEVICES=0 python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A tank is running on the moon." --checkpoint_folder ./outputs/train/train_2023-12-02T14-12-09/ --checkpoint_index 150 --noise_prior 0.5 --seed 8551187
+```
+<table class="center">
+<tr>
+  <td style="text-align:center;"><b>Reference Video</b></td>
+  <td style="text-align:center;" colspan="3"><b>Videos Generated by MotionDirector</b></td>
+</tr>
+<tr>
+  <td><img src=assets/single_video_results/reference_video.gif></td>
+  <td><img src=assets/single_video_results/A_tank_is_running_on_the_moon_8551187.gif></td>
+  <td><img src=assets/single_video_results/A_lion_is_running_past_the_pyramids_431554.gif></td>              
+  <td><img src=assets/single_video_results/A_spaceship_is_flying_past_Mars_8808231.gif></td>
+</tr>
+<tr>
+  <td width=25% style="text-align:center;color:gray;">"A car is running on the road."</td>
+  <td width=25% style="text-align:center;">"A tank is running on the moon.” </br> seed: 8551187</td>
+  <td width=25% style="text-align:center;">"A lion is running past the pyramids." </br> seed: 431554</td>
+  <td width=25% style="text-align:center;">"A spaceship is flying past Mars."  </br> seed: 8808231</td>
+</tr>
+</table>
+
+
+## More results
+
+If you have a more impressive MotionDirector or generated videos, please feel free to open an issue and share them with us. We would greatly appreciate it.
+Improvements to the code are also highly welcome.
+
+Please refer to [Project Page](https://showlab.github.io/MotionDirector) for more results.
+
 
 ## Citation
 
@@ -68,3 +157,7 @@ Please refer to [Project Page](https://showlab.github.io/MotionDirector).
 }
 
 ```
+
+## Shoutouts
+
+- This code builds on [diffusers](https://github.com/huggingface/diffusers) and [Text-To-Video-Finetuning](https://github.com/ExponentialML/Text-To-Video-Finetuning). Thanks for open-sourcing!

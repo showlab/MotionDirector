@@ -1,0 +1,18 @@
+accelerate==0.18.0
+decord==0.6.0
+deepspeed==0.10.0
+diffusers==0.18.0
+huggingface-hub==0.16.4
+lora-diffusion @ git+https://github.com/cloneofsimo/lora.git@bdd51b04c49fa90a88919a19850ec3b4cf3c5ecd
+loralib==0.1.0
+numpy==1.24.0
+omegaconf==2.3.0
+opencv-python==4.8.0.74
+torch==2.0.1
+torchaudio==2.0.2
+torchvision==0.15.2
+tqdm==4.65.0
+transformers==4.27.4
+einops==0.7.0
+imageio==2.33.0
+imageio-ffmpeg==0.4.9
