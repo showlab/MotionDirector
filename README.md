@@ -33,7 +33,6 @@ This is the official repository of [MotionDirector](https://showlab.github.io/Mo
 # create virtual environment
 conda create -n motiondirector python=3.8
 conda activate motiondirector
-
 # install packages
 pip install -r requirements.txt
 ```
@@ -41,6 +40,7 @@ pip install -r requirements.txt
 ### Weights of Foundation Models
 ```shell
 git lfs install
+## You can choose the ModelScopeT2V or ZeroScope, etc., as the foundation model.
 ## ZeroScope
 git clone https://huggingface.co/cerspense/zeroscope_v2_576w ./models/zeroscope_v2_576w/
 ## ModelScopeT2V
@@ -62,7 +62,7 @@ python MotionDirector_train.py --config ./configs/config_single_video.yaml
 Note:  
 - Before running the above command, 
 make sure you replace the path to foundational model weights and training data with your own in the config files `config_multi_videos.yaml` or `config_single_video.yaml`.
-- Generally, training on multiple 16-frame videos usually takes `300~500` steps, about `9~16` minutes using one A100 GPU. Training on a single video takes `50~150` steps, about `1.5~4.5` minutes using one A100 GPU.
+- Generally, training on multiple 16-frame videos usually takes `300~500` steps, about `9~16` minutes using one A100 GPU. Training on a single video takes `50~150` steps, about `1.5~4.5` minutes using one A100 GPU. The required VRAM for training is around 14GB.
 - Reduce `n_sample_frames` if your GPU memory is limited.
 - Reduce the learning rate and increase the training steps for better performance.
 
@@ -79,8 +79,8 @@ We recommend setting it to `0` for MotionDirector trained on multiple videos to 
 
 
 ## Inference with pre-trained MotionDirector
-Please download the trained weights of MotionDirector through [Google Drive](https://drive.google.com/drive/folders/15anLJAkX1UplkPzpU1yLm-W7XoaFTCxp?usp=sharing).
-Put the files in the folder `outputs`, then run the following command to generated videos.
+Please download the trained weights of MotionDirector through [Google Drive](https://drive.google.com/drive/folders/15anLJAkX1UplkPzpU1yLm-W7XoaFTCxp?usp=sharing) or [Huggingface Repo](https://huggingface.co/Yhyu13/MotionDirector_LoRA).
+Put the files in the folder `outputs`, then run the following command to generate videos.
 
 ### MotionDirector trained on multiple videos:
 ```bash
