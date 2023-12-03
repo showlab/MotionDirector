@@ -62,7 +62,7 @@ python MotionDirector_train.py --config ./configs/config_single_video.yaml
 Note:  
 - Before running the above command, 
 make sure you replace the path to foundational model weights and training data with your own in the config files `config_multi_videos.yaml` or `config_single_video.yaml`.
-- Generally, training on multiple 16-frame videos usually takes `300~500` steps, about `9~16` minutes using one A100 GPU. Training on a single video takes `50~150` steps, about `1.5~4.5` minutes using one A100 GPU. The required VRAM for training is around 14GB.
+- Generally, training on multiple 16-frame videos usually takes `300~500` steps, about `9~16` minutes using one A100 GPU. Training on a single video takes `50~150` steps, about `1.5~4.5` minutes using one A100 GPU. The required VRAM for training is around `14GB`.
 - Reduce `n_sample_frames` if your GPU memory is limited.
 - Reduce the learning rate and increase the training steps for better performance.
 
@@ -73,9 +73,9 @@ python MotionDirector_inference.py --model /path/to/the/foundation/model  --prom
 ```
 Note: 
 - Replace `/path/to/the/foundation/model` with your own path to the foundation model, like ZeroScope.
-- The value of `checkpoint_index` means the checkpoint saved at which training step is selected.
+- The value of `checkpoint_index` means the checkpoint saved at which the training step is selected.
 - The value of `noise_prior` indicates how much the inversion noise of the reference video affects the generation. 
-We recommend setting it to `0` for MotionDirector trained on multiple videos to achieve highest diverse generation, while setting it to `0.5` for MotionDirector trained on a singel video for achieving faster convergence and better alignment with the reference video.
+We recommend setting it to `0` for MotionDirector trained on multiple videos to achieve the highest diverse generation, while setting it to `0.1~0.5` for MotionDirector trained on a single video for faster convergence and better alignment with the reference video.
 
 
 ## Inference with pre-trained MotionDirector
