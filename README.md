@@ -26,6 +26,10 @@ This is the official repository of [MotionDirector](https://showlab.github.io/Mo
 ## News
 - [02/12/2023] Code and model weights released!
 
+## ToDo
+- [ ] Gradio Demo
+- [ ] More trained weights of MotionDirector
+
 ## Setup
 ### Requirements
 
