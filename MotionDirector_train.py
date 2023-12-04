@@ -518,7 +518,6 @@ def main(
         enable_xformers_memory_efficient_attention: bool = True,
         enable_torch_2_attn: bool = False,
         seed: Optional[int] = None,
-        train_text_encoder: bool = False,
         use_offset_noise: bool = False,
         rescale_schedule: bool = False,
         offset_noise_strength: float = 0.1,
@@ -526,7 +525,6 @@ def main(
         cache_latents: bool = False,
         cached_latent_dir=None,
         use_unet_lora: bool = False,
-        use_text_lora: bool = False,
         unet_lora_modules: Tuple[str] = [],
         text_encoder_lora_modules: Tuple[str] = [],
         save_pretrained_model: bool = True,
@@ -627,7 +625,11 @@ def main(
     )
 
     # one spatial lora for each video
-    spatial_lora_num = train_dataset.__len__()
+    if 'folder' in dataset_types:
+        spatial_lora_num = train_dataset.__len__()
+    else:
+        spatial_lora_num = 1
+
     lora_manager_spatials = []
     unet_lora_params_spatial_list = []
     optimizer_spatial_list = []
@@ -901,11 +903,6 @@ def main(
                     train_loss_temporal += avg_loss_temporal.item() / gradient_accumulation_steps
 
                 # Backpropagate
-                if any([train_text_encoder, use_text_lora]):
-                    params_to_clip = list(unet.parameters()) + list(text_encoder.parameters())
-                else:
-                    params_to_clip = unet.parameters()
-
                 if not mask_spatial_lora:
                     accelerator.backward(loss_spatial, retain_graph = True)
                     optimizer_spatial_list[step].step()

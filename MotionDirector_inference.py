@@ -130,8 +130,6 @@ def encode(pipe: TextToVideoSDPipeline, pixels: Tensor, batch_size: int = 8):
     return latents
 
 
-
-
 @torch.inference_mode()
 def inference(
     model: str,
@@ -150,27 +148,33 @@ def inference(
     lora_scale: float = 1.0,
     seed: Optional[int] = None,
     latents_path: str="",
-    noise_prior: float = 0.
+    noise_prior: float = 0.,
+    repeat_num: int = 1,
 ):
-    if seed is not None:
-        torch.manual_seed(seed)
 
     with torch.autocast(device, dtype=torch.half):
         # prepare models
         pipe = initialize_pipeline(model, device, xformers, sdp, lora_path, lora_rank, lora_scale)
 
-        # prepare input latents
-        init_latents = prepare_input_latents(
-            pipe=pipe,
-            batch_size=len(prompt),
-            num_frames=num_frames,
-            height=height,
-            width=width,
-            latents_path=latents_path,
-            noise_prior=noise_prior
-        )
+        for i in range(repeat_num):
+            if seed is not None:
+                random_seed = seed
+                torch.manual_seed(seed)
+            else:
+                random_seed = random.randint(100, 10000000)
+                torch.manual_seed(random_seed)
 
-        with torch.no_grad():
+            # prepare input latents
+            init_latents = prepare_input_latents(
+                pipe=pipe,
+                batch_size=len(prompt),
+                num_frames=num_frames,
+                height=height,
+                width=width,
+                latents_path=latents_path,
+                noise_prior=noise_prior
+            )
+
             video_frames = pipe(
                 prompt=prompt,
                 negative_prompt=negative_prompt,
@@ -181,6 +185,17 @@ def inference(
                 guidance_scale=guidance_scale,
                 latents=init_latents
             ).frames
+            # =========================================
+            # ========= write outputs to file =========
+            # =========================================
+            os.makedirs(args.output_dir, exist_ok=True)
+
+            # save to mp4
+            export_to_video(video_frames, f"{out_name}_{random_seed}.mp4", args.fps)
+
+            # # save to gif
+            file_name = f"{out_name}_{random_seed}.gif"
+            imageio.mimsave(file_name, video_frames, 'GIF', duration=1000 * 1 / args.fps, loop=0)
 
     return video_frames
 
@@ -213,6 +228,8 @@ if __name__ == "__main__":
     parser.add_argument("-r", "--seed", type=int, default=None, help="Random seed to make generations reproducible.")
     parser.add_argument("-np", "--noise_prior", type=float, default=0., help="Random seed to make generations reproducible.")
     parser.add_argument("-ci", "--checkpoint_index", type=int, required=True,
+                        help="Random seed to make generations reproducible.")
+    parser.add_argument("-rn", "--repeat_num", type=int, default=None,
                         help="Random seed to make generations reproducible.")
 
     args = parser.parse_args()
@@ -257,18 +274,9 @@ if __name__ == "__main__":
         lora_scale = args.lora_scale,
         seed=args.seed,
         latents_path=latents_path,
-        noise_prior=args.noise_prior
+        noise_prior=args.noise_prior,
+        repeat_num=args.repeat_num
     )
-    # =========================================
-    # ========= write outputs to file =========
-    # =========================================
-    os.makedirs(args.output_dir, exist_ok=True)
 
-    # save to mp4
-    export_to_video(video_frames, f"{out_name}_{args.seed}.mp4", args.fps)
 
-    # # save to gif
-    # file_name = f"{out_name}_{args.seed}.gif"
-    # imageio.mimsave(file_name, video_frames, 'GIF', duration=1000 * 1 / args.fps, loop=0)
 
-    
