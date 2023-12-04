@@ -194,8 +194,8 @@ def inference(
             export_to_video(video_frames, f"{out_name}_{random_seed}.mp4", args.fps)
 
             # # save to gif
-            file_name = f"{out_name}_{random_seed}.gif"
-            imageio.mimsave(file_name, video_frames, 'GIF', duration=1000 * 1 / args.fps, loop=0)
+            # file_name = f"{out_name}_{random_seed}.gif"
+            # imageio.mimsave(file_name, video_frames, 'GIF', duration=1000 * 1 / args.fps, loop=0)
 
     return video_frames
 
@@ -229,7 +229,7 @@ if __name__ == "__main__":
     parser.add_argument("-np", "--noise_prior", type=float, default=0., help="Random seed to make generations reproducible.")
     parser.add_argument("-ci", "--checkpoint_index", type=int, required=True,
                         help="Random seed to make generations reproducible.")
-    parser.add_argument("-rn", "--repeat_num", type=int, default=None,
+    parser.add_argument("-rn", "--repeat_num", type=int, default=1,
                         help="Random seed to make generations reproducible.")
 
     args = parser.parse_args()
