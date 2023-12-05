@@ -24,9 +24,9 @@ This is the official repository of [MotionDirector](https://showlab.github.io/Mo
 </p>
 
 ## News
-- [2023.12.04] [Colab demo](https://github.com/camenduru/MotionDirector-colab) is available. Thanks [Camenduru](https://twitter.com/camenduru).
-- [04/12/2023] [MotionDirector for Cinematic Shots](#MotionDirector_for_Cinematic_Shots) released. Now, you can make AI films with professional cinematic shots!
-- [02/12/2023] Code and model weights released!
+- [2023.12.05] [Colab demo](https://github.com/camenduru/MotionDirector-colab) is available. Thanks to [Camenduru](https://twitter.com/camenduru).
+- [2023.12.04] [MotionDirector for Cinematic Shots](#MotionDirector_for_Cinematic_Shots) released. Now, you can make AI films with professional cinematic shots!
+- [2023.12.02] Code and model weights released!
 
 ## ToDo
 - [ ] Gradio Demo
@@ -213,6 +213,11 @@ python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A f
 </table>
 
 #### 1.2 Zoom In
+The reference video is shot with my own water cup. You can also pick up your cup or any other object to practice camera movements and turn it into imaginative videos. Create your AI films with customized camera movements!
+
+```bash
+python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A firefighter standing in front of a burning forest captured with a zoom in." --checkpoint_folder ./outputs/train/train_2023-12-04T21-52-53/ --checkpoint_index 150 --noise_prior 0.3 --seed 1429227
+```
 <table class="center">
 <tr>
   <td style="text-align:center;"><b>Reference Video</b></td>
@@ -233,6 +238,9 @@ python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A f
 </table>
 
 #### 1.3 Zoom Out
+```bash
+python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A firefighter standing in front of a burning forest captured with a zoom out." --checkpoint_folder ./outputs/train/train_2023-12-04T22-00-02/ --checkpoint_index 150 --noise_prior 0.3 --seed 4971910
+```
 <table class="center">
 <tr>
   <td style="text-align:center;"><b>Reference Video</b></td>
@@ -277,4 +285,4 @@ Please refer to [Project Page](https://showlab.github.io/MotionDirector) for mor
 ## Shoutouts
 
 - This code builds on [diffusers](https://github.com/huggingface/diffusers) and [Text-To-Video-Finetuning](https://github.com/ExponentialML/Text-To-Video-Finetuning). Thanks for open-sourcing!
-- Thanks [Camenduru](https://twitter.com/camenduru) for the [colab demo](https://github.com/camenduru/MotionDirector-colab).
+- Thanks to [Camenduru](https://twitter.com/camenduru) for the [colab demo](https://github.com/camenduru/MotionDirector-colab).
