@@ -151,16 +151,16 @@ def inference(
     noise_prior: float = 0.,
     repeat_num: int = 1,
 ):
+    if seed is not None:
+        random_seed = seed
+        torch.manual_seed(seed)
 
     with torch.autocast(device, dtype=torch.half):
         # prepare models
         pipe = initialize_pipeline(model, device, xformers, sdp, lora_path, lora_rank, lora_scale)
 
         for i in range(repeat_num):
-            if seed is not None:
-                random_seed = seed
-                torch.manual_seed(seed)
-            else:
+            if seed is None:
                 random_seed = random.randint(100, 10000000)
                 torch.manual_seed(random_seed)
 
@@ -175,16 +175,18 @@ def inference(
                 noise_prior=noise_prior
             )
 
-            video_frames = pipe(
-                prompt=prompt,
-                negative_prompt=negative_prompt,
-                width=width,
-                height=height,
-                num_frames=num_frames,
-                num_inference_steps=num_steps,
-                guidance_scale=guidance_scale,
-                latents=init_latents
-            ).frames
+            with torch.no_grad():
+                video_frames = pipe(
+                    prompt=prompt,
+                    negative_prompt=negative_prompt,
+                    width=width,
+                    height=height,
+                    num_frames=num_frames,
+                    num_inference_steps=num_steps,
+                    guidance_scale=guidance_scale,
+                    latents=init_latents
+                ).frames
+
             # =========================================
             # ========= write outputs to file =========
             # =========================================
@@ -226,11 +228,11 @@ if __name__ == "__main__":
     parser.add_argument("-lr", "--lora_rank", type=int, default=32, help="Size of the LoRA checkpoint's projection matrix (defaults to 32).")
     parser.add_argument("-ls", "--lora_scale", type=float, default=1.0, help="Scale of LoRAs.")
     parser.add_argument("-r", "--seed", type=int, default=None, help="Random seed to make generations reproducible.")
-    parser.add_argument("-np", "--noise_prior", type=float, default=0., help="Random seed to make generations reproducible.")
+    parser.add_argument("-np", "--noise_prior", type=float, default=0., help="Scale of the influence of inversion noise.")
     parser.add_argument("-ci", "--checkpoint_index", type=int, required=True,
-                        help="Random seed to make generations reproducible.")
+                        help="The index of checkpoint, such as 300.")
     parser.add_argument("-rn", "--repeat_num", type=int, default=1,
-                        help="Random seed to make generations reproducible.")
+                        help="How many results to generate with the same prompt.")
 
     args = parser.parse_args()
     # fmt: on
@@ -254,8 +256,6 @@ if __name__ == "__main__":
     lora_path = f"{args.checkpoint_folder}/checkpoint-{args.checkpoint_index}/temporal/lora"
     latents_folder = f"{args.checkpoint_folder}/cached_latents"
     latents_path = f"{latents_folder}/{random.choice(os.listdir(latents_folder))}"
-    if args.seed is None:
-        args.seed = random.randint(100, 10000000)
     assert os.path.exists(lora_path)
     video_frames = inference(
         model=args.model,

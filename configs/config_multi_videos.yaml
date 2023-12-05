@@ -65,9 +65,8 @@ validation_data:
 
   # A custom prompt that is different from your training dataset.
   prompt:
-  - "A person is riding a bicycle past the Eiffel Tower."
-  - "A person is riding a bicycle on the moon."
-  - "A panda is riding a bicycle."
+  - "An alien is riding a bicycle on Mars."
+  - "A panda is riding a bicycle in a garden."
 
   # Whether or not to sample preview during training (Requires more VRAM).
   sample_preview: True
@@ -105,9 +104,6 @@ checkpointing_steps: 100
 
 # How many steps to do for validation if sample_preview is enabled.
 validation_steps: 100
-
-# Seed for validation.
-seed: 6668889
 
 # Whether or not we want to use mixed precision with accelerate
 mixed_precision: "fp16"

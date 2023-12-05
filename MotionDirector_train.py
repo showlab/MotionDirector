@@ -549,10 +549,6 @@ def main(
     # Initialize accelerate, transformers, and diffusers warnings
     accelerate_set_verbose(accelerator)
 
-    # If passed along, set the training seed now.
-    if seed is not None:
-        set_seed(seed)
-
     # Handle the output folder creation
     if accelerator.is_main_process:
         output_dir = create_output_folders(output_dir, config)
@@ -938,7 +934,6 @@ def main(
                     )
 
                 if should_sample(global_step, validation_steps, validation_data):
-                    if global_step == 1: print("Performing validation prompt.")
                     if accelerator.is_main_process:
                         with accelerator.autocast():
                             unet.eval()

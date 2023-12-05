@@ -52,6 +52,12 @@ git clone https://huggingface.co/cerspense/zeroscope_v2_576w ./models/zeroscope_
 ## ModelScopeT2V
 git clone https://huggingface.co/damo-vilab/text-to-video-ms-1.7b ./models/model_scope/
 ```
+### Weights of trained MotionDirector <a name="download_weights"></a>
+```shell
+# Make sure you have git-lfs installed (https://git-lfs.com)
+git lfs install
+git clone https://huggingface.co/ruizhaocv/MotionDirector_weights ./outputs
+```
 
 ## Usage
 ### Training
@@ -85,12 +91,12 @@ We recommend setting it to `0` for MotionDirector trained on multiple videos to 
 
 
 ## Inference with pre-trained MotionDirector
-Please download the trained weights of MotionDirector through [Google Drive](https://drive.google.com/drive/folders/15anLJAkX1UplkPzpU1yLm-W7XoaFTCxp?usp=sharing) or [Huggingface Repo](https://huggingface.co/Yhyu13/MotionDirector_LoRA).
-Put the files in the folder `outputs`, then run the following command to generate videos.
+All available weights are at official [Huggingface Repo](https://huggingface.co/ruizhaocv/MotionDirector_weights).
+Run the [download command](#download_weights), the weights will be downloaded to the folder `outputs`, then run the following inference command to generate videos.
 
 ### MotionDirector trained on multiple videos:
 ```bash
-python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A person is riding a bicycle past the Eiffel Tower." --checkpoint_folder ./outputs/train/train_2023-12-02T13-39-36/ --checkpoint_index 300 --noise_prior 0. --seed 7192280
+python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A person is riding a bicycle past the Eiffel Tower." --checkpoint_folder ./outputs/train/riding_bicycle/ --checkpoint_index 300 --noise_prior 0. --seed 7192280
 ```
 Note:  
 - Replace `/path/to/the/ZeroScope` with your own path to the foundation model, i.e. the ZeroScope.
@@ -121,7 +127,7 @@ Results:
 ### MotionDirector trained on a single video:
 16 frames:
 ```bash
-python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A tank is running on the moon." --checkpoint_folder ./outputs/train/train_2023-12-02T14-12-09/ --checkpoint_index 150 --noise_prior 0.5 --seed 8551187
+python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A tank is running on the moon." --checkpoint_folder ./outputs/train/car_16/ --checkpoint_index 150 --noise_prior 0.5 --seed 8551187
 ```
 <table class="center">
 <tr>
@@ -144,7 +150,7 @@ python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A t
 
 24 frames:
 ```bash
-python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A truck is running past the Arc de Triomphe." --checkpoint_folder ./outputs/train/train_2023-12-02T19-37-22/ --checkpoint_index 150 --noise_prior 0.5 --width 576 --height 320 --num-frames 24 --seed 34543
+python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A truck is running past the Arc de Triomphe." --checkpoint_folder ./outputs/train/car_24/ --checkpoint_index 150 --noise_prior 0.5 --width 576 --height 320 --num-frames 24 --seed 34543
 ```
 <table class="center">
 <tr>
@@ -179,7 +185,7 @@ python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A t
 ### 1. Zoom
 #### 1.1 Dolly Zoom (Hitchcockian Zoom)
 ```bash
-python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A firefighter standing in front of a burning forest captured with a dolly zoom." --checkpoint_folder ./outputs/train/train_2023-12-04T19-27-18/ --checkpoint_index 150 --noise_prior 0.5 --seed 9365597
+python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A firefighter standing in front of a burning forest captured with a dolly zoom." --checkpoint_folder ./outputs/train/dolly_zoom/ --checkpoint_index 150 --noise_prior 0.5 --seed 9365597
 ```
 <table class="center">
 <tr>
@@ -216,7 +222,7 @@ python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A f
 The reference video is shot with my own water cup. You can also pick up your cup or any other object to practice camera movements and turn it into imaginative videos. Create your AI films with customized camera movements!
 
 ```bash
-python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A firefighter standing in front of a burning forest captured with a zoom in." --checkpoint_folder ./outputs/train/train_2023-12-04T21-52-53/ --checkpoint_index 150 --noise_prior 0.3 --seed 1429227
+python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A firefighter standing in front of a burning forest captured with a zoom in." --checkpoint_folder ./outputs/train/zoom_in/ --checkpoint_index 150 --noise_prior 0.3 --seed 1429227
 ```
 <table class="center">
 <tr>
@@ -239,7 +245,7 @@ python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A f
 
 #### 1.3 Zoom Out
 ```bash
-python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A firefighter standing in front of a burning forest captured with a zoom out." --checkpoint_folder ./outputs/train/train_2023-12-04T22-00-02/ --checkpoint_index 150 --noise_prior 0.3 --seed 4971910
+python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A firefighter standing in front of a burning forest captured with a zoom out." --checkpoint_folder ./outputs/train/zoom_out/ --checkpoint_index 150 --noise_prior 0.3 --seed 4971910
 ```
 <table class="center">
 <tr>
@@ -285,4 +291,5 @@ Please refer to [Project Page](https://showlab.github.io/MotionDirector) for mor
 ## Shoutouts
 
 - This code builds on [diffusers](https://github.com/huggingface/diffusers) and [Text-To-Video-Finetuning](https://github.com/ExponentialML/Text-To-Video-Finetuning). Thanks for open-sourcing!
-- Thanks to [Camenduru](https://twitter.com/camenduru) for the [colab demo](https://github.com/camenduru/MotionDirector-colab).
+- Thanks to [camenduru](https://twitter.com/camenduru) for the [colab demo](https://github.com/camenduru/MotionDirector-colab).
+- Thanks to [yhyu13](https://github.com/yhyu13) for the [Huggingface Repo](https://huggingface.co/Yhyu13/MotionDirector_LoRA)
