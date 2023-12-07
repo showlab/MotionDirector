@@ -23,6 +23,30 @@ This is the official repository of [MotionDirector](https://showlab.github.io/Mo
 <em>MotionDirector can customize text-to-video diffusion models to generate videos with desired motions.</em>
 </p>
 
+<table class="center">
+<tr>
+  <td style="text-align:center;" colspan="4"><b>Astronaut's daily life on Mars (Motion concepts learned by MotionDirector)</b></td>
+</tr>
+<tr>
+<td style="text-align:center;"><b>Lifting Weights</b></td>
+<td style="text-align:center;"><b>Reference Videos</b></td>
+<td style="text-align:center;"><b>Reference Videos</b></td>
+<td style="text-align:center;"><b>Reference Videos</b></td>
+</tr>
+<tr>
+  <td><img src=assets/astronaut_mars/An_astronaut_is_lifting_weights_on_Mars_4K_high_quailty_highly_detailed_4008521.gif></td>
+  <td><img src=assets/astronaut_mars/Astronaut_playing_golf_on_Mars_659514.gif></td>
+  <td><img src=assets/astronaut_mars/An_astronaut_is_riding_a_horse_on_Mars_4K_high_quailty_highly_detailed_1913261.gif></td>              
+  <td><img src=assets/astronaut_mars/An_astronaut_is_riding_a_bicycle_past_the_pyramids_Mars_4K_high_quailty_highly_detailed_5532778.gif></td>
+</tr>
+<tr>
+  <td width=25% style="text-align:center;">"An astronaut is lifting weights on Mars, 4K, high quailty, highly detailed.” </br> seed: 4008521</td>
+  <td width=25% style="text-align:center;">"Astronaut playing golf on Mars” </br> seed: 659514</td>
+  <td width=25% style="text-align:center;">"An astronaut is riding a horse on Mars, 4K, high quailty, highly detailed."  </br> seed: 4422954</td>
+  <td width=25% style="text-align:center;">"An astronaut is riding a bicycle past the pyramids Mars, 4K, high quailty, highly detailed."  </br> seed: 5532778</td>
+<tr>
+</table>
+
 ## News
 - [2023.12.06] [MotionDirector for Sports](#MotionDirector_for_Sports) released! Lifting weights, riding horse, palying golf, etc.
 - [2023.12.05] [Colab demo](https://github.com/camenduru/MotionDirector-colab) is available. Thanks to [Camenduru](https://twitter.com/camenduru).
