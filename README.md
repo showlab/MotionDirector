@@ -42,7 +42,7 @@ This is the official repository of [MotionDirector](https://showlab.github.io/Mo
 <tr>
   <td width=25% style="text-align:center;">"An astronaut is lifting weights on Mars, 4K, high quailty, highly detailed.” </br> seed: 4008521</td>
   <td width=25% style="text-align:center;">"Astronaut playing golf on Mars” </br> seed: 659514</td>
-  <td width=25% style="text-align:center;">"An astronaut is riding a horse on Mars, 4K, high quailty, highly detailed."  </br> seed: 4422954</td>
+  <td width=25% style="text-align:center;">"An astronaut is riding a horse on Mars, 4K, high quailty, highly detailed."  </br> seed: 1913261</td>
   <td width=25% style="text-align:center;">"An astronaut is riding a bicycle past the pyramids Mars, 4K, high quailty, highly detailed."  </br> seed: 5532778</td>
 <tr>
 </table>
