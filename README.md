@@ -29,9 +29,9 @@ This is the official repository of [MotionDirector](https://showlab.github.io/Mo
 </tr>
 <tr>
 <td style="text-align:center;"><b>Lifting Weights</b></td>
-<td style="text-align:center;"><b>Reference Videos</b></td>
-<td style="text-align:center;"><b>Reference Videos</b></td>
-<td style="text-align:center;"><b>Reference Videos</b></td>
+<td style="text-align:center;"><b>Playing Golf</b></td>
+<td style="text-align:center;"><b>Riding Horse</b></td>
+<td style="text-align:center;"><b>Riding Bicycle</b></td>
 </tr>
 <tr>
   <td><img src=assets/astronaut_mars/An_astronaut_is_lifting_weights_on_Mars_4K_high_quailty_highly_detailed_4008521.gif></td>
