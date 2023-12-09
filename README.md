@@ -45,6 +45,23 @@ This is the official repository of [MotionDirector](https://showlab.github.io/Mo
   <td width=25% style="text-align:center;">"An astronaut is riding a horse on Mars, 4K, high quailty, highly detailed."  </br> seed: 1913261</td>
   <td width=25% style="text-align:center;">"An astronaut is riding a bicycle past the pyramids Mars, 4K, high quailty, highly detailed."  </br> seed: 5532778</td>
 <tr>
+<td style="text-align:center;"><b>Skateboarding</b></td>
+<td style="text-align:center;"><b>Cinematic Shot: "Reverse Follow"</b></td>
+<td style="text-align:center;"><b>Cinematic Shot: "Follow"</b></td>
+<td style="text-align:center;"><b>Cinematic Shot: "Orbit"</b></td>
+</tr>
+<tr>
+  <td><img src=assets/astronaut_mars/An_astronaut_is_skateboarding_on_Mars_6615212.gif></td>
+  <td><img src=assets/astronaut_mars/An_astronaut_is_walking_on_Mars_captured_with_a_reverse_follow_cinematic_shot_1224445.gif></td>
+  <td><img src=assets/astronaut_mars/An_astronaut_is_walking_on_Mars_captured_with_a_follow_cinematic_shot_6191674.gif></td>              
+  <td><img src=assets/astronaut_mars/An_astronaut_is_standing_on_Mars_captured_with_an_orbit_cinematic_shot_7483453.gif></td>
+</tr>
+<tr>
+  <td width=25% style="text-align:center;">"An astronaut is skateboarding on Mars"</br> seed: 6615212</td>
+  <td width=25% style="text-align:center;">"An astronaut is walking on Mars captured with a reverse follow cinematic shot." </br> seed: 1224445</td>
+  <td width=25% style="text-align:center;">"An astronaut is walking on Mars captured with a follow cinematic shot." </br> seed: 6191674</td>
+  <td width=25% style="text-align:center;">"An astronaut is standing on Mars captured with an orbit cinematic shot." </br> seed: 7483453</td>
+<tr>
 </table>
 
 ## News
