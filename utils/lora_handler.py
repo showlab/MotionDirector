@@ -143,7 +143,7 @@ class LoraHandler(object):
                 print(f"Could not load LoRAs for {model.__class__.__name__}. Injecting new ones instead...")
 
         except Exception as e:
-            print(f"An error occured while loading a LoRA file: {e}")
+            print(f"An error occurred while loading a LoRA file: {e}")
                  
     def get_lora_func_args(self, lora_path, use_lora, model, replace_modules, r, dropout, lora_bias, scale):
         return_dict = lora_args.copy()
