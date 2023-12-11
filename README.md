@@ -1,21 +1,31 @@
-# MotionDirector
+<p align="center">
 
-This is the official repository of [MotionDirector](https://showlab.github.io/MotionDirector).
+  <h2 align="center">MotionDirector: Motion Customization of Text-to-Video Diffusion Models</h2>
+  <p align="center">
+    <a href="https://ruizhaocv.github.io/"><strong>Rui Zhao</strong></a>
+    ·
+    <a href="https://ycgu.site/"><strong>Yuchao Gu</strong></a>
+    ·
+    <a href="https://zhangjiewu.github.io/"><strong>Jay Zhangjie Wu</strong></a>
+    ·
+    <a href="https://junhaozhang98.github.io//"><strong>David Junhao Zhang</strong></a>
+    ·
+    <a href="https://jia-wei-liu.github.io/"><strong>Jia-Wei Liu</strong></a>
+    ·
+    <a href="https://weijiawu.github.io/"><strong>Weijia Wu</strong></a>
+    ·
+    <a href="https://www.jussikeppo.com/"><strong>Jussi Keppo</strong></a>
+    ·
+    <a href="https://sites.google.com/view/showlab"><strong>Mike Zheng Shou</strong></a>
+    <br>
+    <br>
+        <a href="https://arxiv.org/abs/2310.08465"><img src='https://img.shields.io/badge/arXiv-2310.08465-b31b1b.svg'></a>
+        <a href='https://showlab.github.io/MotionDirector'><img src='https://img.shields.io/badge/Project_Page-MotionDirector-blue'></a>
+        <a href='https://huggingface.co/spaces/ruizhaocv/MotionDirector'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-yellow'></a>
+    <br>
+    <b>Show Lab, National University of Singapore &nbsp; | &nbsp; Zhejiang University</b>
+  </p>
 
-**MotionDirector: Motion Customization of Text-to-Video Diffusion Models.**
-<br/>
-[Rui Zhao](https://ruizhaocv.github.io/),
-[Yuchao Gu](https://ycgu.site/), 
-[Jay Zhangjie Wu](https://zhangjiewu.github.io/), 
-[David Junhao Zhang](https://junhaozhang98.github.io/),
-[Jiawei Liu](https://jia-wei-liu.github.io/),
-[Weijia Wu](https://weijiawu.github.io/),
-[Jussi Keppo](https://www.jussikeppo.com/),
-[Mike Zheng Shou](https://sites.google.com/view/showlab)
-<br/>
-
-[![Project Page](https://img.shields.io/badge/Project-Website-orange)](https://showlab.github.io/MotionDirector)
-[![arXiv](https://img.shields.io/badge/arXiv-MotionDirector-b31b1b.svg)](https://arxiv.org/abs/2310.08465)
 
 <p align="center">
 <img src="https://github.com/showlab/MotionDirector/blob/page/assets/teaser.gif" width="1080px"/>  
@@ -65,13 +75,14 @@ This is the official repository of [MotionDirector](https://showlab.github.io/Mo
 </table>
 
 ## News
+- [2023.12.13] Online gradio demo released @ [Hugging Face Spaces](https://huggingface.co/spaces/ruizhaocv/MotionDirector)! Welcome to try it.
 - [2023.12.06] [MotionDirector for Sports](#MotionDirector_for_Sports) released! Lifting weights, riding horse, palying golf, etc.
 - [2023.12.05] [Colab demo](https://github.com/camenduru/MotionDirector-colab) is available. Thanks to [Camenduru](https://twitter.com/camenduru).
 - [2023.12.04] [MotionDirector for Cinematic Shots](#MotionDirector_for_Cinematic_Shots) released. Now, you can make AI films with professional cinematic shots!
 - [2023.12.02] Code and model weights released!
 
 ## ToDo
-- [ ] Gradio Demo
+- [x] Gradio Demo
 - [ ] More trained weights of MotionDirector
 
 ## Setup
@@ -99,6 +110,10 @@ git clone https://huggingface.co/damo-vilab/text-to-video-ms-1.7b ./models/model
 # Make sure you have git-lfs installed (https://git-lfs.com)
 git lfs install
 git clone https://huggingface.co/ruizhaocv/MotionDirector_weights ./outputs
+
+# More and better trained MotionDirector are released at a new repo:
+git clone https://huggingface.co/ruizhaocv/MotionDirector ./outputs
+# The usage is slightly different, which will be updated later.
 ```
 
 ## Usage
@@ -376,6 +391,8 @@ Please refer to [Project Page](https://showlab.github.io/MotionDirector) for mor
 
 ## Shoutouts
 
-- This code builds on [diffusers](https://github.com/huggingface/diffusers) and [Text-To-Video-Finetuning](https://github.com/ExponentialML/Text-To-Video-Finetuning). Thanks for open-sourcing!
+- This code builds on [diffusers](https://github.com/huggingface/diffusers), [Tune-a-video](https://github.com/showlab/Tune-A-Video) and [Text-To-Video-Finetuning](https://github.com/ExponentialML/Text-To-Video-Finetuning). Thanks for open-sourcing!
 - Thanks to [camenduru](https://twitter.com/camenduru) for the [colab demo](https://github.com/camenduru/MotionDirector-colab).
 - Thanks to [yhyu13](https://github.com/yhyu13) for the [Huggingface Repo](https://huggingface.co/Yhyu13/MotionDirector_LoRA).
+- We would like to thank [AK(@_akhaliq)](https://twitter.com/_akhaliq?lang=en) and huggingface team for the help of setting up oneline gradio demo.
+- Thanks to [MagicAnimate](https://github.com/magic-research/magic-animate/) for the gradio demo template.
