@@ -621,10 +621,11 @@ def main(
     )
 
     # one spatial lora for each video
-    if 'folder' in dataset_types:
-        spatial_lora_num = train_dataset.__len__()
-    else:
-        spatial_lora_num = 1
+    spatial_lora_num = train_dataset.__len__()
+    # if 'folder' in dataset_types:
+    #     spatial_lora_num = train_dataset.__len__()
+    # else:
+    #     spatial_lora_num = 1
 
     lora_manager_spatials = []
     unet_lora_params_spatial_list = []
@@ -810,7 +811,7 @@ def main(
         else:
             loras = extract_lora_child_module(unet, target_replace_module=["Transformer2DModel"])
             for lora_i in loras:
-                lora_i.scale = 1.
+                lora_i.scale = 0.
 
             for lora_idx in range(0, len(loras), spatial_lora_num):
                 loras[lora_idx + step].scale = 1.
