@@ -396,3 +396,4 @@ Please refer to [Project Page](https://showlab.github.io/MotionDirector) for mor
 - Thanks to [yhyu13](https://github.com/yhyu13) for the [Huggingface Repo](https://huggingface.co/Yhyu13/MotionDirector_LoRA).
 - We would like to thank [AK(@_akhaliq)](https://twitter.com/_akhaliq?lang=en) and huggingface team for the help of setting up oneline gradio demo.
 - Thanks to [MagicAnimate](https://github.com/magic-research/magic-animate/) for the gradio demo template.
+- Thanks to [deepbeepmeep](https://github.com/deepbeepmeep) for improving gradio demo.
