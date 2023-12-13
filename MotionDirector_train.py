@@ -884,8 +884,7 @@ def main(
                 optimizer_temporal.zero_grad(set_to_none=True)
 
                 mask_temporal_lora = False
-                # mask_spatial_lora = False
-                mask_spatial_lora = random.uniform(0, 1) < 0.2 and not mask_temporal_lora
+                mask_spatial_lora = False
 
                 with accelerator.autocast():
                     loss_spatial, loss_temporal, latents, init_noise = finetune_unet(batch, step, mask_spatial_lora=mask_spatial_lora, mask_temporal_lora=mask_temporal_lora)
