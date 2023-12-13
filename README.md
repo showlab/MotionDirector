@@ -80,6 +80,7 @@
 - [2023.12.05] [Colab demo](https://github.com/camenduru/MotionDirector-colab) is available. Thanks to [Camenduru](https://twitter.com/camenduru).
 - [2023.12.04] [MotionDirector for Cinematic Shots](#MotionDirector_for_Cinematic_Shots) released. Now, you can make AI films with professional cinematic shots!
 - [2023.12.02] Code and model weights released!
+- [2023.10.12] Paper and project page released.
 
 ## ToDo
 - [x] Gradio Demo
