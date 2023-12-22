@@ -22,6 +22,7 @@
         <a href="https://arxiv.org/abs/2310.08465"><img src='https://img.shields.io/badge/arXiv-2310.08465-b31b1b.svg'></a>
         <a href='https://showlab.github.io/MotionDirector'><img src='https://img.shields.io/badge/Project_Page-MotionDirector-blue'></a>
         <a href='https://huggingface.co/spaces/ruizhaocv/MotionDirector'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-yellow'></a>
+        <a href='https://www.youtube.com/watch?v=Wq93zi8bE3U'><img src='https://img.shields.io/badge/Demo_Video-MotionDirector-red'></a>
     <br>
     <b>Show Lab, National University of Singapore &nbsp; | &nbsp; Zhejiang University</b>
   </p>
@@ -33,6 +34,16 @@
 <em>MotionDirector can customize text-to-video diffusion models to generate videos with desired motions.</em>
 </p>
 
+## Task Definition
+Given a set of video clips of the same motion concept, the task of **Motion Customization** is to adapt existing text-to-video diffusion
+models to generate diverse videos with this motion.
+
+
+## Demos
+### Demo Video:
+[![Demo Video of MotionDirector](https://res.cloudinary.com/marcomontalbano/image/upload/v1702612078/video_to_markdown/images/youtube--Wq93zi8bE3U-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=Wq93zi8bE3U "Demo Video of MotionDirector")
+
+### Astronaut's daily life on Mars:
 <table class="center">
 <tr>
   <td style="text-align:center;" colspan="4"><b>Astronaut's daily life on Mars (Motion concepts learned by MotionDirector)</b></td>
@@ -397,4 +408,4 @@ Please refer to [Project Page](https://showlab.github.io/MotionDirector) for mor
 - Thanks to [yhyu13](https://github.com/yhyu13) for the [Huggingface Repo](https://huggingface.co/Yhyu13/MotionDirector_LoRA).
 - We would like to thank [AK(@_akhaliq)](https://twitter.com/_akhaliq?lang=en) and huggingface team for the help of setting up oneline gradio demo.
 - Thanks to [MagicAnimate](https://github.com/magic-research/magic-animate/) for the gradio demo template.
-- Thanks to [deepbeepmeep](https://github.com/deepbeepmeep) for improving gradio demo.
+- Thanks to [deepbeepmeep](https://github.com/deepbeepmeep), and [XiaominLi](https://github.com/XiaominLi1997) for improving the code.

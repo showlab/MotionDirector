@@ -321,9 +321,8 @@ class SingleVideoDataset(Dataset):
         return video
 
     def get_frame_buckets(self, vr):
-        _, h, w = vr[0].shape        
-        # width, height = sensible_buckets(self.width, self.height, h, w)
-        width, height = self.width, self.height
+        h, w, c = vr[0].shape
+        width, height = sensible_buckets(self.width, self.height, w, h)
         resize = T.transforms.Resize((height, width), antialias=True)
 
         return resize
@@ -435,7 +434,7 @@ class ImageDataset(Dataset):
         resize = T.transforms.Resize((height, width), antialias=True)
 
         img = resize(img) 
-        img = repeat(img, 'c h w -> f c h w', f=1)
+        img = repeat(img, 'c h w -> f c h w', f=16)
 
         prompt = get_text_prompt(
             file_path=train_data,
@@ -497,9 +496,8 @@ class VideoFolderDataset(Dataset):
         self.fps = fps
 
     def get_frame_buckets(self, vr):
-        _, h, w = vr[0].shape        
-        width, height = sensible_buckets(self.width, self.height, h, w)
-        # width, height = self.width, self.height
+        h, w, c = vr[0].shape
+        width, height = sensible_buckets(self.width, self.height, w, h)
         resize = T.transforms.Resize((height, width), antialias=True)
 
         return resize
