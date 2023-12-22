@@ -35,6 +35,7 @@
 </p>
 
 ## Task Definition
+Motion Customization of Text-to-Video Diffusion Models: </br>
 Given a set of video clips of the same motion concept, the task of **Motion Customization** is to adapt existing text-to-video diffusion
 models to generate diverse videos with this motion.
 
