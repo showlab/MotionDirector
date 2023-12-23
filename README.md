@@ -87,6 +87,7 @@ models to generate diverse videos with this motion.
 </table>
 
 ## News
+- [2023.12.23] MotionDirector has been featured in Hugging Face's '[Spaces of the Week](https://huggingface.co/spaces) 🔥' trending list! 
 - [2023.12.13] Online gradio demo released @ [Hugging Face Spaces](https://huggingface.co/spaces/ruizhaocv/MotionDirector)! Welcome to try it.
 - [2023.12.06] [MotionDirector for Sports](#MotionDirector_for_Sports) released! Lifting weights, riding horse, palying golf, etc.
 - [2023.12.05] [Colab demo](https://github.com/camenduru/MotionDirector-colab) is available. Thanks to [Camenduru](https://twitter.com/camenduru).
