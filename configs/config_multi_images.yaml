@@ -59,17 +59,18 @@ train_data:
   n_sample_frames: 16
   
   # 'single_video'
-  image_dir: "./test_data/img_car/"
+  image_dir: "./test_data/Terracotta_Warrior/"
 
-  # The prompt when using a single image file
-  single_img_prompt: "A car is running on the road."
+  # The prompt when using images
+  single_img_prompt: "A Terracotta Warrior on a pure color background."
 
 # Validation data parameters.
 validation_data:
 
   # A custom prompt that is different from your training dataset. 
   prompt:
-  - "A car is running on the road."
+  - "A Terracotta Warrior is standing."
+  - "A Terracotta Warrior is running."
 
   # Whether or not to sample preview during training (Requires more VRAM).
   sample_preview: True
@@ -109,13 +110,13 @@ train_temporal_lora: False
 random_hflip_img: 0.5
 
 # Maximum number of train steps. Model is saved after training.
-max_train_steps: 300
+max_train_steps: 1000
 
 # Saves a model every nth step.
-checkpointing_steps: 100
+checkpointing_steps: 50
 
 # How many steps to do for validation if sample_preview is enabled.
-validation_steps: 100
+validation_steps: 50
 
 # Whether or not we want to use mixed precision with accelerate
 mixed_precision: "fp16"

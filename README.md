@@ -44,49 +44,40 @@ models to generate diverse videos with this motion.
 ### Demo Video:
 [![Demo Video of MotionDirector](https://res.cloudinary.com/marcomontalbano/image/upload/v1702612078/video_to_markdown/images/youtube--Wq93zi8bE3U-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=Wq93zi8bE3U "Demo Video of MotionDirector")
 
-### Astronaut's daily life on Mars:
-<table class="center">
+### Customize both Appearance and Motion: <a name="examples-of-appearance-customization"></a>
+<table class="center"> 
 <tr>
-  <td style="text-align:center;" colspan="4"><b>Astronaut's daily life on Mars (Motion concepts learned by MotionDirector)</b></td>
+  <td style="text-align:center;"><b>Reference Images</b></td>
+  <td style="text-align:center;" colspan="3"><b>Generated Videos with Motions Learned by MotionDirector</b></td>
 </tr>
 <tr>
-<td style="text-align:center;"><b>Lifting Weights</b></td>
-<td style="text-align:center;"><b>Playing Golf</b></td>
-<td style="text-align:center;"><b>Riding Horse</b></td>
-<td style="text-align:center;"><b>Riding Bicycle</b></td>
+  <td><img src=assets/customized_appearance_results/reference_images.png></td>
+  <td><img src=assets/customized_appearance_results/A_Terracotta_Warrior_is_riding_a_horse_through_an_ancient_battlefield_1455028.gif></td>
+  <td><img src=assets/customized_appearance_results/A_Terracotta_Warrior_is_playing_golf_in_front_of_the_Great_Wall_5804477.gif></td>
+  <td><img src=assets/customized_appearance_results/A_Terracotta_Warrior_is_walking_cross_the_ancient_army_captured_with_a_reverse_follow_cinematic_shot_653658.gif></td>
 </tr>
 <tr>
-  <td><img src=assets/astronaut_mars/An_astronaut_is_lifting_weights_on_Mars_4K_high_quailty_highly_detailed_4008521.gif></td>
-  <td><img src=assets/astronaut_mars/Astronaut_playing_golf_on_Mars_659514.gif></td>
-  <td><img src=assets/astronaut_mars/An_astronaut_is_riding_a_horse_on_Mars_4K_high_quailty_highly_detailed_1913261.gif></td>              
-  <td><img src=assets/astronaut_mars/An_astronaut_is_riding_a_bicycle_past_the_pyramids_Mars_4K_high_quailty_highly_detailed_5532778.gif></td>
+  <td width=25% style="text-align:center;color:gray;">"A Terracotta Warrior on a pure color background."</td>
+  <td width=25% style="text-align:center;">"A Terracotta Warrior is riding a horse through an ancient battlefield."</br> seed: 1455028</td>
+  <td width=25% style="text-align:center;">"A Terracotta Warrior is playing golf in front of the Great Wall." </br> seed: 5804477</td>
+  <td width=25% style="text-align:center;">"A Terracotta Warrior is walking cross the ancient army captured with a reverse follow cinematic shot." </br> seed: 653658</td>
 </tr>
 <tr>
-  <td width=25% style="text-align:center;">"An astronaut is lifting weights on Mars, 4K, high quailty, highly detailed.” </br> seed: 4008521</td>
-  <td width=25% style="text-align:center;">"Astronaut playing golf on Mars” </br> seed: 659514</td>
-  <td width=25% style="text-align:center;">"An astronaut is riding a horse on Mars, 4K, high quailty, highly detailed."  </br> seed: 1913261</td>
-  <td width=25% style="text-align:center;">"An astronaut is riding a bicycle past the pyramids Mars, 4K, high quailty, highly detailed."  </br> seed: 5532778</td>
-<tr>
-<td style="text-align:center;"><b>Skateboarding</b></td>
-<td style="text-align:center;"><b>Cinematic Shot: "Reverse Follow"</b></td>
-<td style="text-align:center;"><b>Cinematic Shot: "Follow"</b></td>
-<td style="text-align:center;"><b>Cinematic Shot: "Orbit"</b></td>
+  <td><img src=assets/customized_appearance_results/reference_images.png></td>
+  <td><img src=assets/customized_appearance_results/A_Terracotta_Warrior_is_riding_a_bicycle_past_an_ancient_Chinese_palace_166357.gif></td>
+  <td><img src=assets/customized_appearance_results/A_Terracotta_Warrior_is_lifting_weights_in_front_of_the_Great_Wall_5635982.gif></td>
+  <td><img src=assets/customized_appearance_results/A_Terracotta_Warrior_is_skateboarding_9033688.gif></td>
 </tr>
 <tr>
-  <td><img src=assets/astronaut_mars/An_astronaut_is_skateboarding_on_Mars_6615212.gif></td>
-  <td><img src=assets/astronaut_mars/An_astronaut_is_walking_on_Mars_captured_with_a_reverse_follow_cinematic_shot_1224445.gif></td>
-  <td><img src=assets/astronaut_mars/An_astronaut_is_walking_on_Mars_captured_with_a_follow_cinematic_shot_6191674.gif></td>              
-  <td><img src=assets/astronaut_mars/An_astronaut_is_standing_on_Mars_captured_with_an_orbit_cinematic_shot_7483453.gif></td>
+  <td width=25% style="text-align:center;color:gray;">"A Terracotta Warrior on a pure color background."</td>
+  <td width=25% style="text-align:center;">"A Terracotta Warrior is riding a bicycle past an ancient Chinese palace."</br> seed: 166357.</td>
+  <td width=25% style="text-align:center;">"A Terracotta Warrior is lifting weights in front of the Great Wall." </br> seed: 5635982</td>
+  <td width=25% style="text-align:center;">"A Terracotta Warrior is skateboarding." </br> seed: 9033688</td>
 </tr>
-<tr>
-  <td width=25% style="text-align:center;">"An astronaut is skateboarding on Mars"</br> seed: 6615212</td>
-  <td width=25% style="text-align:center;">"An astronaut is walking on Mars captured with a reverse follow cinematic shot." </br> seed: 1224445</td>
-  <td width=25% style="text-align:center;">"An astronaut is walking on Mars captured with a follow cinematic shot." </br> seed: 6191674</td>
-  <td width=25% style="text-align:center;">"An astronaut is standing on Mars captured with an orbit cinematic shot." </br> seed: 7483453</td>
-<tr>
 </table>
 
 ## News
+- [2023.12.24] [MotionDirector with Customized Appearance](#motiondirector-with-customized-appearance-) released. Now, you can customize both appearance and motion in video generation.
 - [2023.12.24] [MotionDirector for Image Animation](#motiondirector-for-image-animation-) released.
 - [2023.12.23] MotionDirector has been featured in Hugging Face's '[Spaces of the Week](https://huggingface.co/spaces) 🔥' trending list! 
 - [2023.12.13] Online gradio demo released @ [Hugging Face Spaces](https://huggingface.co/spaces/ruizhaocv/MotionDirector)! Welcome to try it.
@@ -396,7 +387,7 @@ python MotionDirector_train.py --config ./configs/config_single_video.yaml
 ### Inference
 Inference with spatial path learned from reference image and temporal path learned form reference video.
 ```bash
-python MotionDirector_inference_multi.py --model /path/to/the/foundation/model  --prompt "Your prompt" --spatial_path_folder /path/to/the/trained/MotionDirector/spatial/ --temporal_path_folder /path/to/the/trained/MotionDirector/temporal/ --noise_prior 0.
+python MotionDirector_inference_multi.py --model /path/to/the/foundation/model  --prompt "Your prompt" --spatial_path_folder /path/to/the/trained/MotionDirector/spatial/lora/ --temporal_path_folder /path/to/the/trained/MotionDirector/temporal/lora/ --noise_prior 0.
 ```
 ### Example
 Download the pre-trained weights.
@@ -405,7 +396,7 @@ git clone https://huggingface.co/ruizhaocv/MotionDirector ./outputs
 ```
 Run the following command.
 ```bash
-python MotionDirector_inference_multi.py --model /path/to/the/ZeroScope  --prompt "A car is running on the road" --spatial_path_folder ./outputs/train/image_animation/train_2023-12-26T14-37-16/checkpoint-300/spatial/lora/ --temporal_path_folder ./outputs/train/image_animation/train_2023-12-26T13-08-20/checkpoint-300/temporal/lora/ --noise_prior 0.5 --seed 5057764
+python MotionDirector_inference_multi.py --model /path/to/the/ZeroScope  --prompt "A car is running on the road." --spatial_path_folder ./outputs/train/image_animation/train_2023-12-26T14-37-16/checkpoint-300/spatial/lora/ --temporal_path_folder ./outputs/train/image_animation/train_2023-12-26T13-08-20/checkpoint-300/temporal/lora/ --noise_prior 0.5 --seed 5057764
 ```
 <table class="center">
 <tr>
@@ -428,6 +419,33 @@ python MotionDirector_inference_multi.py --model /path/to/the/ZeroScope  --promp
 </table>
 
 
+## MotionDirector with Customized Appearance <a name="MotionDirector_with_Customized_Appearance"></a>
+### Train
+Train the spatial path with reference images.
+```bash
+python MotionDirector_train.py --config ./configs/config_multi_images.yaml
+```
+Then train the temporal path to learn the motions in reference videos.
+```bash
+python MotionDirector_train.py --config ./configs/config_multi_videos.yaml
+```
+
+### Inference
+Inference with spatial path learned from reference images and temporal path learned form reference videos.
+```bash
+python MotionDirector_inference_multi.py --model /path/to/the/foundation/model  --prompt "Your prompt" --spatial_path_folder /path/to/the/trained/MotionDirector/spatial/lora/ --temporal_path_folder /path/to/the/trained/MotionDirector/temporal/lora/ --noise_prior 0.
+```
+### Example
+Download the pre-trained weights.
+```bash
+git clone https://huggingface.co/ruizhaocv/MotionDirector ./outputs
+```
+Run the following command.
+```bash
+python MotionDirector_inference_multi.py --model /path/to/the/ZeroScope  --prompt "A Terracotta Warrior is riding a horse through an ancient battlefield." --spatial_path_folder ./outputs/train/customized_appearance/terracotta_warrior/checkpoint-default/spatial/lora --temporal_path_folder ./outputs/train/riding_horse/checkpoint-default/temporal/lora/ --noise_prior 0. --seed 1455028
+```
+Results are shown in the [table](#examples-of-appearance-customization-).
+
 ## More results
 
 If you have a more impressive MotionDirector or generated videos, please feel free to open an issue and share them with us. We would greatly appreciate it.
@@ -435,6 +453,47 @@ Improvements to the code are also highly welcome.
 
 Please refer to [Project Page](https://showlab.github.io/MotionDirector) for more results.
 
+### Astronaut's daily life on Mars:
+<table class="center">
+<tr>
+  <td style="text-align:center;" colspan="4"><b>Astronaut's daily life on Mars (Motion concepts learned by MotionDirector)</b></td>
+</tr>
+<tr>
+<td style="text-align:center;"><b>Lifting Weights</b></td>
+<td style="text-align:center;"><b>Playing Golf</b></td>
+<td style="text-align:center;"><b>Riding Horse</b></td>
+<td style="text-align:center;"><b>Riding Bicycle</b></td>
+</tr>
+<tr>
+  <td><img src=assets/astronaut_mars/An_astronaut_is_lifting_weights_on_Mars_4K_high_quailty_highly_detailed_4008521.gif></td>
+  <td><img src=assets/astronaut_mars/Astronaut_playing_golf_on_Mars_659514.gif></td>
+  <td><img src=assets/astronaut_mars/An_astronaut_is_riding_a_horse_on_Mars_4K_high_quailty_highly_detailed_1913261.gif></td>              
+  <td><img src=assets/astronaut_mars/An_astronaut_is_riding_a_bicycle_past_the_pyramids_Mars_4K_high_quailty_highly_detailed_5532778.gif></td>
+</tr>
+<tr>
+  <td width=25% style="text-align:center;">"An astronaut is lifting weights on Mars, 4K, high quailty, highly detailed.” </br> seed: 4008521</td>
+  <td width=25% style="text-align:center;">"Astronaut playing golf on Mars” </br> seed: 659514</td>
+  <td width=25% style="text-align:center;">"An astronaut is riding a horse on Mars, 4K, high quailty, highly detailed."  </br> seed: 1913261</td>
+  <td width=25% style="text-align:center;">"An astronaut is riding a bicycle past the pyramids Mars, 4K, high quailty, highly detailed."  </br> seed: 5532778</td>
+<tr>
+<td style="text-align:center;"><b>Skateboarding</b></td>
+<td style="text-align:center;"><b>Cinematic Shot: "Reverse Follow"</b></td>
+<td style="text-align:center;"><b>Cinematic Shot: "Follow"</b></td>
+<td style="text-align:center;"><b>Cinematic Shot: "Orbit"</b></td>
+</tr>
+<tr>
+  <td><img src=assets/astronaut_mars/An_astronaut_is_skateboarding_on_Mars_6615212.gif></td>
+  <td><img src=assets/astronaut_mars/An_astronaut_is_walking_on_Mars_captured_with_a_reverse_follow_cinematic_shot_1224445.gif></td>
+  <td><img src=assets/astronaut_mars/An_astronaut_is_walking_on_Mars_captured_with_a_follow_cinematic_shot_6191674.gif></td>              
+  <td><img src=assets/astronaut_mars/An_astronaut_is_standing_on_Mars_captured_with_an_orbit_cinematic_shot_7483453.gif></td>
+</tr>
+<tr>
+  <td width=25% style="text-align:center;">"An astronaut is skateboarding on Mars"</br> seed: 6615212</td>
+  <td width=25% style="text-align:center;">"An astronaut is walking on Mars captured with a reverse follow cinematic shot." </br> seed: 1224445</td>
+  <td width=25% style="text-align:center;">"An astronaut is walking on Mars captured with a follow cinematic shot." </br> seed: 6191674</td>
+  <td width=25% style="text-align:center;">"An astronaut is standing on Mars captured with an orbit cinematic shot." </br> seed: 7483453</td>
+<tr>
+</table>
 
 ## Citation
 
