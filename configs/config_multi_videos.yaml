@@ -55,7 +55,7 @@ train_data:
   n_sample_frames: 16
 
   # 'multiple videos'
-  path: "./test_data/bicycle/"
+  path: "./test_data/bicycle-1/"
 
   # The prompt when using a a single video file
   fallback_prompt: "A person is riding a bicycle."
@@ -65,7 +65,7 @@ validation_data:
 
   # A custom prompt that is different from your training dataset.
   prompt:
-  - "An alien is riding a bicycle on Mars."
+  - "A person is riding a bicycle past the Eiffel Tower."
   - "A panda is riding a bicycle in a garden."
 
   # Whether or not to sample preview during training (Requires more VRAM).
@@ -90,20 +90,23 @@ validation_data:
   # scale of noise prior, i.e. the scale of inversion noises
   noise_prior: 0
 
+use_offset_noise: False
+offset_noise_strength: 0.
+
 # Learning rate for AdamW
 learning_rate: 5e-4
 
 # Weight decay. Higher = more regularization. Lower = closer to dataset.
-adam_weight_decay: 1e-2
+adam_weight_decay: 1e-4
 
 # Maximum number of train steps. Model is saved after training.
-max_train_steps: 500
+max_train_steps: 3000
 
 # Saves a model every nth step.
 checkpointing_steps: 100
 
 # How many steps to do for validation if sample_preview is enabled.
-validation_steps: 100
+validation_steps: 500
 
 # Whether or not we want to use mixed precision with accelerate
 mixed_precision: "fp16"

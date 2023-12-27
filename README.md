@@ -44,7 +44,7 @@ models to generate diverse videos with this motion.
 ### Demo Video:
 [![Demo Video of MotionDirector](https://res.cloudinary.com/marcomontalbano/image/upload/v1702612078/video_to_markdown/images/youtube--Wq93zi8bE3U-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=Wq93zi8bE3U "Demo Video of MotionDirector")
 
-### Customize both Appearance and Motion: <a name="examples-of-appearance-customization"></a>
+### Customize both Appearance and Motion: <a name="Customize_both_Appearance_and_Motion"></a>
 <table class="center"> 
 <tr>
   <td style="text-align:center;"><b>Reference Images</b></td>
@@ -77,8 +77,8 @@ models to generate diverse videos with this motion.
 </table>
 
 ## News
-- [2023.12.24] [MotionDirector with Customized Appearance](#motiondirector-with-customized-appearance-) released. Now, you can customize both appearance and motion in video generation.
-- [2023.12.24] [MotionDirector for Image Animation](#motiondirector-for-image-animation-) released.
+- [2023.12.27] [MotionDirector with Customized Appearance](#motiondirector-with-customized-appearance-) released. Now, you can customize both appearance and motion in video generation.
+- [2023.12.27] [MotionDirector for Image Animation](#motiondirector-for-image-animation-) released.
 - [2023.12.23] MotionDirector has been featured in Hugging Face's '[Spaces of the Week](https://huggingface.co/spaces) 🔥' trending list! 
 - [2023.12.13] Online gradio demo released @ [Hugging Face Spaces](https://huggingface.co/spaces/ruizhaocv/MotionDirector)! Welcome to try it.
 - [2023.12.06] [MotionDirector for Sports](#motiondirector-for-sports-) released! Lifting weights, riding horse, palying golf, etc.
@@ -90,6 +90,18 @@ models to generate diverse videos with this motion.
 ## ToDo
 - [x] Gradio Demo
 - [ ] More trained weights of MotionDirector
+
+## Model List
+
+| Type |                                                       Training Data                                                       |                                      Descriptions                                       | Link  |
+| :---: |:-------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------:|:---:|
+| MotionDirector for Sports   |                                              Multiple videos for each model.                                              | Learn motion concepts of sports, i.e. lifting weights, riding horse, palying golf, etc. | [Link](#motiondirector-for-sports-)  |
+| MotionDirector for Cinematic Shots   |                                              A single video for each model.                                               |   Learn motion concepts of cinematic shots, i.e. dolly zoom, zoom in, zoom out, etc.    | [Link](#motiondirector-for-cinematic-shots-)  |
+| MotionDirector for Image Animation   |                 A single image for spatial path. And a single video or multiple videos for temporal path.                 |                      Animate the given image with learned motions.                      | [Link](#motiondirector-for-image-animation-)  |
+| MotionDirector with Customized Appearance  | A single image or multiple images for spatial path. And a single video or multiple videos for temporal path. |                Customize both appearance and motion in video generation.                | [Link](#motiondirector-with-customized-appearance-)  |
+
+
+
 
 ## Setup
 ### Requirements
@@ -444,7 +456,7 @@ Run the following command.
 ```bash
 python MotionDirector_inference_multi.py --model /path/to/the/ZeroScope  --prompt "A Terracotta Warrior is riding a horse through an ancient battlefield." --spatial_path_folder ./outputs/train/customized_appearance/terracotta_warrior/checkpoint-default/spatial/lora --temporal_path_folder ./outputs/train/riding_horse/checkpoint-default/temporal/lora/ --noise_prior 0. --seed 1455028
 ```
-Results are shown in the [table](#examples-of-appearance-customization-).
+Results are shown in the [table](#customize-both-appearance-and-motion-).
 
 ## More results
 
