@@ -87,12 +87,12 @@ models to generate diverse videos with this motion.
 </table>
 
 ## News
-- [2023.12.24] [MotionDirector for Image Animation](#MotionDirector_for_Image_Animation) released.
+- [2023.12.24] [MotionDirector for Image Animation](#motiondirector-for-image-animation-) released.
 - [2023.12.23] MotionDirector has been featured in Hugging Face's '[Spaces of the Week](https://huggingface.co/spaces) 🔥' trending list! 
 - [2023.12.13] Online gradio demo released @ [Hugging Face Spaces](https://huggingface.co/spaces/ruizhaocv/MotionDirector)! Welcome to try it.
-- [2023.12.06] [MotionDirector for Sports](#MotionDirector_for_Sports) released! Lifting weights, riding horse, palying golf, etc.
+- [2023.12.06] [MotionDirector for Sports](#motiondirector-for-sports-) released! Lifting weights, riding horse, palying golf, etc.
 - [2023.12.05] [Colab demo](https://github.com/camenduru/MotionDirector-colab) is available. Thanks to [Camenduru](https://twitter.com/camenduru).
-- [2023.12.04] [MotionDirector for Cinematic Shots](#MotionDirector_for_Cinematic_Shots) released. Now, you can make AI films with professional cinematic shots!
+- [2023.12.04] [MotionDirector for Cinematic Shots](#motiondirector-for-cinematic-shots-) released. Now, you can make AI films with professional cinematic shots!
 - [2023.12.02] Code and model weights released!
 - [2023.10.12] Paper and project page released.
 
