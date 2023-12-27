@@ -469,7 +469,8 @@ def save_pipe(
     ).to(torch_dtype=torch.float32)
 
     lora_manager_spatial.save_lora_weights(model=copy.deepcopy(pipeline), save_path=save_path+'/spatial', step=global_step)
-    lora_manager_temporal.save_lora_weights(model=copy.deepcopy(pipeline), save_path=save_path+'/temporal', step=global_step)
+    if lora_manager_temporal is not None:
+        lora_manager_temporal.save_lora_weights(model=copy.deepcopy(pipeline), save_path=save_path+'/temporal', step=global_step)
 
     if save_pretrained_model:
         pipeline.save_pretrained(save_path)
@@ -493,6 +494,9 @@ def main(
         output_dir: str,
         train_data: Dict,
         validation_data: Dict,
+        single_spatial_lora: bool = False,
+        train_temporal_lora: bool = True,
+        random_hflip_img: float = -1,
         extra_train_data: list = [],
         dataset_types: Tuple[str] = ('json'),
         validation_steps: int = 100,
@@ -595,45 +599,51 @@ def main(
     extra_unet_params = extra_unet_params if extra_unet_params is not None else {}
     extra_text_encoder_params = extra_unet_params if extra_unet_params is not None else {}
 
-    # Use LoRA if enabled.
-    # one temporal lora
-    lora_manager_temporal = LoraHandler(use_unet_lora=use_unet_lora, unet_replace_modules=["TransformerTemporalModel"])
+    # Temporal LoRA
+    if train_temporal_lora:
+        # one temporal lora
+        lora_manager_temporal = LoraHandler(use_unet_lora=use_unet_lora, unet_replace_modules=["TransformerTemporalModel"])
 
-    unet_lora_params_temporal, unet_negation_temporal = lora_manager_temporal.add_lora_to_model(
-        use_unet_lora, unet, lora_manager_temporal.unet_replace_modules, lora_unet_dropout,
-        lora_path + '/temporal/lora/', r=lora_rank)
+        unet_lora_params_temporal, unet_negation_temporal = lora_manager_temporal.add_lora_to_model(
+            use_unet_lora, unet, lora_manager_temporal.unet_replace_modules, lora_unet_dropout,
+            lora_path + '/temporal/lora/', r=lora_rank)
 
-    optimizer_temporal = optimizer_cls(
-        create_optimizer_params([param_optim(unet_lora_params_temporal, use_unet_lora, is_lora=True,
-                                             extra_params={**{"lr": learning_rate}, **extra_text_encoder_params}
-                                             )], learning_rate),
-        lr=learning_rate,
-        betas=(adam_beta1, adam_beta2),
-        weight_decay=adam_weight_decay,
-        eps=adam_epsilon,
-    )
+        optimizer_temporal = optimizer_cls(
+            create_optimizer_params([param_optim(unet_lora_params_temporal, use_unet_lora, is_lora=True,
+                                                 extra_params={**{"lr": learning_rate}, **extra_text_encoder_params}
+                                                 )], learning_rate),
+            lr=learning_rate,
+            betas=(adam_beta1, adam_beta2),
+            weight_decay=adam_weight_decay,
+            eps=adam_epsilon,
+        )
 
-    lr_scheduler_temporal = get_scheduler(
-        lr_scheduler,
-        optimizer=optimizer_temporal,
-        num_warmup_steps=lr_warmup_steps * gradient_accumulation_steps,
-        num_training_steps=max_train_steps * gradient_accumulation_steps,
-    )
+        lr_scheduler_temporal = get_scheduler(
+            lr_scheduler,
+            optimizer=optimizer_temporal,
+            num_warmup_steps=lr_warmup_steps * gradient_accumulation_steps,
+            num_training_steps=max_train_steps * gradient_accumulation_steps,
+        )
+    else:
+        lora_manager_temporal = None
+        unet_lora_params_temporal, unet_negation_temporal = [], []
+        optimizer_temporal = None
+        lr_scheduler_temporal = None
 
-    # one spatial lora for each video
-    spatial_lora_num = train_dataset.__len__()
-    # if 'folder' in dataset_types:
-    #     spatial_lora_num = train_dataset.__len__()
-    # else:
-    #     spatial_lora_num = 1
+    # Spatial LoRAs
+    if single_spatial_lora:
+        spatial_lora_num = 1
+    else:
+        # one spatial lora for each video
+        spatial_lora_num = train_dataset.__len__()
 
-    lora_manager_spatials = []
+    lora_managers_spatial = []
     unet_lora_params_spatial_list = []
     optimizer_spatial_list = []
     lr_scheduler_spatial_list = []
     for i in range(spatial_lora_num):
         lora_manager_spatial = LoraHandler(use_unet_lora=use_unet_lora, unet_replace_modules=["Transformer2DModel"])
-        lora_manager_spatials.append(lora_manager_spatial)
+        lora_managers_spatial.append(lora_manager_spatial)
         unet_lora_params_spatial, unet_negation_spatial = lora_manager_spatial.add_lora_to_model(
             use_unet_lora, unet, lora_manager_spatial.unet_replace_modules, lora_unet_dropout,
             lora_path + '/spatial/lora/', r=lora_rank)
@@ -810,19 +820,25 @@ def main(
             loss_spatial = None
         else:
             loras = extract_lora_child_module(unet, target_replace_module=["Transformer2DModel"])
-            for lora_i in loras:
-                lora_i.scale = 0.
 
-            for lora_idx in range(0, len(loras), spatial_lora_num):
-                loras[lora_idx + step].scale = 1.
+            if spatial_lora_num == 1:
+                for lora_i in loras:
+                    lora_i.scale = 1.
+            else:
+                for lora_i in loras:
+                    lora_i.scale = 0.
+
+                for lora_idx in range(0, len(loras), spatial_lora_num):
+                    loras[lora_idx + step].scale = 1.
 
             loras = extract_lora_child_module(unet, target_replace_module=["TransformerTemporalModel"])
-            for lora_i in loras:
-                lora_i.scale = 0.
+            if len(loras) > 0:
+                for lora_i in loras:
+                    lora_i.scale = 0.
 
             ran_idx = torch.randint(0, noisy_latents.shape[2], (1,)).item()
 
-            if random.uniform(0, 1) < -0.5:
+            if random.uniform(0, 1) < random_hflip_img:
                 pixel_values_spatial = transforms.functional.hflip(
                     batch["pixel_values"][:, ran_idx, :, :, :]).unsqueeze(1)
                 latents_spatial = tensor_to_vae_latent(pixel_values_spatial, vae)
@@ -881,10 +897,14 @@ def main(
                 for optimizer_spatial in optimizer_spatial_list:
                     optimizer_spatial.zero_grad(set_to_none=True)
 
-                optimizer_temporal.zero_grad(set_to_none=True)
+                if optimizer_temporal is not None:
+                    optimizer_temporal.zero_grad(set_to_none=True)
 
-                mask_temporal_lora = False
-                mask_spatial_lora = False
+                if train_temporal_lora:
+                    mask_temporal_lora = False
+                else:
+                    mask_temporal_lora = True
+                mask_spatial_lora = random.uniform(0, 1) < 0.2 and not mask_temporal_lora
 
                 with accelerator.autocast():
                     loss_spatial, loss_temporal, latents, init_noise = finetune_unet(batch, step, mask_spatial_lora=mask_spatial_lora, mask_temporal_lora=mask_temporal_lora)
@@ -894,21 +914,28 @@ def main(
                     avg_loss_spatial = accelerator.gather(loss_spatial.repeat(train_batch_size)).mean()
                     train_loss_spatial += avg_loss_spatial.item() / gradient_accumulation_steps
 
-                if not mask_temporal_lora:
+                if not mask_temporal_lora and train_temporal_lora:
                     avg_loss_temporal = accelerator.gather(loss_temporal.repeat(train_batch_size)).mean()
                     train_loss_temporal += avg_loss_temporal.item() / gradient_accumulation_steps
 
                 # Backpropagate
                 if not mask_spatial_lora:
-                    accelerator.backward(loss_spatial, retain_graph = True)
-                    optimizer_spatial_list[step].step()
+                    accelerator.backward(loss_spatial, retain_graph=True)
+                    if spatial_lora_num == 1:
+                        optimizer_spatial_list[0].step()
+                    else:
+                        optimizer_spatial_list[step].step()
 
-                if not mask_temporal_lora:
+                if not mask_temporal_lora and train_temporal_lora:
                     accelerator.backward(loss_temporal)
                     optimizer_temporal.step()
 
-                lr_scheduler_spatial_list[step].step()
-                lr_scheduler_temporal.step()
+                if spatial_lora_num == 1:
+                    lr_scheduler_spatial_list[0].step()
+                else:
+                    lr_scheduler_spatial_list[step].step()
+                if lr_scheduler_temporal is not None:
+                    lr_scheduler_temporal.step()
 
             # Checks if the accelerator has performed an optimization step behind the scenes
             if accelerator.sync_gradients:
@@ -987,7 +1014,8 @@ def main(
                         text_encoder_gradient_checkpointing
                     )
 
-            accelerator.log({"loss_temporal": loss_temporal.detach().item()}, step=step)
+            if loss_temporal is not None:
+                accelerator.log({"loss_temporal": loss_temporal.detach().item()}, step=step)
 
             if global_step >= max_train_steps:
                 break
@@ -1018,4 +1046,3 @@ if __name__ == "__main__":
     parser.add_argument("--config", type=str, default='./configs/config_multi_videos.yaml')
     args = parser.parse_args()
     main(**OmegaConf.load(args.config))
-
