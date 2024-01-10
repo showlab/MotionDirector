@@ -698,9 +698,6 @@ def extract_lora_child_module(model, target_replace_module=DEFAULT_TARGET_REPLAC
         ):
             loras.append(_child_module)
 
-    if len(loras) == 0:
-        raise ValueError("No lora injected.")
-
     return loras
 
 def extract_lora_as_tensor(
