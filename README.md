@@ -77,6 +77,7 @@ models to generate diverse videos with this motion.
 </table>
 
 ## News
+- [2024.02.03] [MotionDirector for AnimateDiff](https://github.com/ExponentialML/AnimateDiff-MotionDirector) is available. Thanks to [ExponentialML](https://github.com/ExponentialML).
 - [2023.12.27] [MotionDirector with Customized Appearance](#motiondirector-with-customized-appearance-) released. Now, you can customize both appearance and motion in video generation.
 - [2023.12.27] [MotionDirector for Image Animation](#motiondirector-for-image-animation-) released.
 - [2023.12.23] MotionDirector has been featured in Hugging Face's '[Spaces of the Week](https://huggingface.co/spaces) 🔥' trending list! 
