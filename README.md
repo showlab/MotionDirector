@@ -195,7 +195,7 @@ Results:
 <tr>
   <td width=25% style="text-align:center;color:gray;">"A person is riding a bicycle."</td>
   <td width=25% style="text-align:center;">"A person is riding a bicycle past the Eiffel Tower.” </br> seed: 7192280</td>
-  <td width=25% style="text-align:center;">"A panda is riding a bicycle in a garden."  </br> seed: 2178639</td>
+  <td width=25% style="text-align:center;">"A panda is riding a bicycle in a garden."  </br> seed: <s>2178639</s> </td>
   <td width=25% style="text-align:center;">"An alien is riding a bicycle on Mars."  </br> seed: 2390886</td>
 </table>
 
