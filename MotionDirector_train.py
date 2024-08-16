@@ -347,7 +347,7 @@ def handle_cache_latents(
     return torch.utils.data.DataLoader(
         CachedDataset(cache_dir=cache_save_dir),
         batch_size=train_batch_size,
-        shuffle=True,
+        shuffle=False,
         num_workers=0
     )
 
@@ -677,7 +677,7 @@ def main(
     train_dataloader = torch.utils.data.DataLoader(
         train_dataset,
         batch_size=train_batch_size,
-        shuffle=True
+        shuffle=False
     )
 
     # Latents caching
