@@ -24,7 +24,7 @@
         <a href='https://huggingface.co/spaces/ruizhaocv/MotionDirector'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-yellow'></a>
         <a href='https://www.youtube.com/watch?v=Wq93zi8bE3U'><img src='https://img.shields.io/badge/Demo_Video-MotionDirector-red'></a>
     <br>
-    <b>Show Lab, National University of Singapore &nbsp; | &nbsp; Zhejiang University</b>
+    <b>Show Lab, National University of Singapore</b>
   </p>
 
 
@@ -277,7 +277,7 @@ python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A p
 <tr>
   <td width=25% style="text-align:center;">"A panda is lifting weights in a garden.” </br> seed: 1699276</td>
   <td width=25% style="text-align:center;">"A police officer is lifting weights in front of the police station.” </br> seed: 6804745</td>
-  <td width=25% style="text-align:center;">"A panda is riding a bicycle in a garden."  </br> seed: 2178639</td>
+  <td width=25% style="text-align:center;">"A panda is riding a bicycle in a garden."  </br> seed: <s>2178639</s> </td>
   <td width=25% style="text-align:center;">"An alien is riding a bicycle on Mars."  </br> seed: 2390886</td>
 </tr>
 <tr>
