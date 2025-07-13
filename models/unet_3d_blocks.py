@@ -16,8 +16,8 @@ import torch
 import torch.utils.checkpoint as checkpoint
 from torch import nn
 from diffusers.models.resnet import Downsample2D, ResnetBlock2D, TemporalConvLayer, Upsample2D
-from diffusers.models.transformer_2d import Transformer2DModel
-from diffusers.models.transformer_temporal import TransformerTemporalModel
+from diffusers import Transformer2DModel
+from diffusers import TransformerTemporalModel
 
 # Assign gradient checkpoint function to simple variable for readability.
 g_c = checkpoint.checkpoint

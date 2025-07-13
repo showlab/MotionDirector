@@ -12,6 +12,7 @@ from torch import Tensor
 from torch.nn.functional import interpolate
 from tqdm import trange
 import random
+import numpy as np
 
 from MotionDirector_train import export_to_video, handle_memory_attention, load_primary_models, unet_and_text_g_c, freeze_models
 from utils.lora_handler import LoraHandler
@@ -80,36 +81,113 @@ def inverse_video(pipe, latents, num_steps):
     return ddim_inv_latent
 
 
+# def prepare_input_latents(
+#     pipe: TextToVideoSDPipeline,
+#     batch_size: int,
+#     num_frames: int,
+#     height: int,
+#     width: int,
+#     latents_path:str,
+#     noise_prior: float,
+#     device: str = "cuda"
+# ):
+#     # initialize with random gaussian noise
+#     scale = pipe.vae_scale_factor
+#     shape = (batch_size, pipe.unet.config.in_channels, num_frames, height // scale, width // scale)
+#     print("shape: ", shape)
+#     if noise_prior > 0.:
+#         cached_latents = torch.load(latents_path, map_location=torch.device(device))
+#         for key in cached_latents:
+#             try:
+#                 print(f"cached_latents Key: {key}, Value:\n{cached_latents[key].shape}\n")
+#             except:
+#                 print(f"cached_latents Key: {key}, Value:\n{cached_latents[key]}\n")
+#         if 'inversion_noise' not in cached_latents:
+#             latents = inverse_video(pipe, cached_latents['latents'].unsqueeze(0), 50).squeeze(0)
+#             print("latents1.shape: ", latents.shape)
+#         else:
+#             latents = torch.load(latents_path)['inversion_noise'].unsqueeze(0)
+#             print("latents2.shape: ", latents.shape)
+#         if latents.shape[0] != batch_size:
+#             latents = latents.repeat(batch_size, 1, 1, 1, 1)
+#             print("latents3.shape: ", latents.shape)
+#         if latents.shape != shape:
+#             latents = interpolate(rearrange(latents, "b c f h w -> (b f) c h w", b=batch_size), (height // scale, width // scale), mode='bilinear')
+#             print("latents4.shape: ", latents.shape)
+#             latents = rearrange(latents, "(b f) c h w -> b c f h w", b=batch_size)
+#             print("latents5.shape: ", latents.shape)
+#         noise = torch.randn_like(latents, dtype=torch.half)
+#         print("noise.shape: ", noise.shape)
+#         latents = (noise_prior) ** 0.5 * latents + (1 - noise_prior) ** 0.5 * noise
+#         print("latents.shape: ", latents.shape)
+#     else:
+#         latents = torch.randn(shape, dtype=torch.half)
+        
+#     print("latents.shape: ", latents.shape)
+    
+#     return latents
+
 def prepare_input_latents(
     pipe: TextToVideoSDPipeline,
     batch_size: int,
     num_frames: int,
     height: int,
     width: int,
-    latents_path:str,
-    noise_prior: float
-):
-    # initialize with random gaussian noise
+    latents_path: str,
+    noise_prior: float,
+    device: str = "cuda"
+) -> Tensor:
+    # Initialize with random gaussian noise
     scale = pipe.vae_scale_factor
     shape = (batch_size, pipe.unet.config.in_channels, num_frames, height // scale, width // scale)
+    print("shape: ", shape)
+    
     if noise_prior > 0.:
-        cached_latents = torch.load(latents_path)
+        cached_latents = torch.load(latents_path, map_location=torch.device(device))
+        for key in cached_latents:
+            try:
+                print(f"cached_latents Key: {key}, Value:\n{cached_latents[key].shape}\n")
+            except:
+                print(f"cached_latents Key: {key}, Value:\n{cached_latents[key]}\n")
+        
         if 'inversion_noise' not in cached_latents:
             latents = inverse_video(pipe, cached_latents['latents'].unsqueeze(0), 50).squeeze(0)
+            print("latents1.shape: ", latents.shape)
         else:
             latents = torch.load(latents_path)['inversion_noise'].unsqueeze(0)
+            print("latents2.shape: ", latents.shape)
+        
         if latents.shape[0] != batch_size:
             latents = latents.repeat(batch_size, 1, 1, 1, 1)
-        if latents.shape != shape:
-            latents = interpolate(rearrange(latents, "b c f h w -> (b f) c h w", b=batch_size), (height // scale, width // scale), mode='bilinear')
+            print("latents3.shape: ", latents.shape)
+        
+        # Adjust num_frames if necessary
+        if latents.shape[2] != num_frames:
+            # Rearrange to (batch, channels, height, width, frames) for temporal interpolation
+            latents = rearrange(latents, "b c f h w -> b c h w f")
+            # Interpolate along the frame dimension
+            latents = interpolate(latents, size=(latents.shape[2], latents.shape[3], num_frames), mode='trilinear', align_corners=False)
+            # Rearrange back to (batch, channels, frames, height, width)
+            latents = rearrange(latents, "b c h w f -> b c f h w")
+            print("latents_temporal.shape: ", latents.shape)
+        
+        if latents.shape[3:] != shape[3:]:
+            # Spatial interpolation
+            latents = interpolate(rearrange(latents, "b c f h w -> (b f) c h w", b=batch_size), 
+                                size=(height // scale, width // scale), mode='bilinear')
+            print("latents4.shape: ", latents.shape)
             latents = rearrange(latents, "(b f) c h w -> b c f h w", b=batch_size)
-        noise = torch.randn_like(latents, dtype=torch.half)
-        latents = (noise_prior) ** 0.5 * latents + (1 - noise_prior) ** 0.5 * noise
+            print("latents5.shape: ", latents.shape)
+        
+        noise = torch.randn_like(latents, dtype=torch.float16)
+        print("noise.shape: ", noise.shape)
+        latents = (noise_prior ** 0.5) * latents + ((1 - noise_prior) ** 0.5) * noise
+        print("latents.shape: ", latents.shape)
     else:
-        latents = torch.randn(shape, dtype=torch.half)
-
+        latents = torch.randn(shape, dtype=torch.float16)
+        print("latents.shape: ", latents.shape)
+    
     return latents
-
 
 def encode(pipe: TextToVideoSDPipeline, pixels: Tensor, batch_size: int = 8):
     nf = pixels.shape[2]
@@ -158,7 +236,7 @@ def inference(
     with torch.autocast(device, dtype=torch.half):
         # prepare models
         pipe = initialize_pipeline(model, device, xformers, sdp, lora_path, lora_rank, lora_scale)
-
+        
         for i in range(repeat_num):
             if seed is None:
                 random_seed = random.randint(100, 10000000)
@@ -172,9 +250,10 @@ def inference(
                 height=height,
                 width=width,
                 latents_path=latents_path,
-                noise_prior=noise_prior
+                noise_prior=noise_prior,
+                device=device
             )
-
+            
             with torch.no_grad():
                 video_frames = pipe(
                     prompt=prompt,
@@ -186,7 +265,7 @@ def inference(
                     guidance_scale=guidance_scale,
                     latents=init_latents
                 ).frames
-
+                
             # =========================================
             # ========= write outputs to file =========
             # =========================================
@@ -229,7 +308,7 @@ if __name__ == "__main__":
     parser.add_argument("-ls", "--lora_scale", type=float, default=1.0, help="Scale of LoRAs.")
     parser.add_argument("-r", "--seed", type=int, default=None, help="Random seed to make generations reproducible.")
     parser.add_argument("-np", "--noise_prior", type=float, default=0., help="Scale of the influence of inversion noise.")
-    parser.add_argument("-ci", "--checkpoint_index", type=int, required=True,
+    parser.add_argument("-ci", "--checkpoint_index", type=int, required=False, default=None,
                         help="The index of checkpoint, such as 300.")
     parser.add_argument("-rn", "--repeat_num", type=int, default=1,
                         help="How many results to generate with the same prompt.")
@@ -252,8 +331,11 @@ if __name__ == "__main__":
     # =========================================
     # ============= sample videos =============
     # =========================================
-
-    lora_path = f"{args.checkpoint_folder}/checkpoint-{args.checkpoint_index}/temporal/lora"
+    if args.checkpoint_index:
+        lora_path = f"{args.checkpoint_folder}/checkpoint-{args.checkpoint_index}/temporal/lora"
+    else:
+        lora_path = f"{args.checkpoint_folder}/temporal/lora"
+        
     latents_folder = f"{args.checkpoint_folder}/cached_latents"
     latents_path = f"{latents_folder}/{random.choice(os.listdir(latents_folder))}"
     assert os.path.exists(lora_path)
@@ -277,6 +359,4 @@ if __name__ == "__main__":
         noise_prior=args.noise_prior,
         repeat_num=args.repeat_num
     )
-
-
-
+    
